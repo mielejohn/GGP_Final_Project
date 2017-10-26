@@ -8,9 +8,9 @@ Once that is done, if I,  John Miele, does not have you aa a contributor please 
 GitHub username and I will add you. Once you accept the invitation to collaborate follow these steps.
 
 1. On the main page go to Branches right beneath the main progress bar.
-2. Create a branch labled (Name)'s Branch.
+2. Create a branch labled (Name)'s Branch. (You can find mine in that section as an example)
 3. Once the branch is created you may then Clone the repo onto your designated folder using TortoiseSVN checkout, it will take some time to clone once files have been added.
-4. Under branches you should see your branch along with the rest of the team
+4. Under branches you should see your branch along with the rest of the team.
 
 
 ### For submitting work through TortoiseSVN
