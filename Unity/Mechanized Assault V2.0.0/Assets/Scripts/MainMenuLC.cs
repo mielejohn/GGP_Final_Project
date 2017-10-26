@@ -1,0 +1,319 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEditor.SceneManagement;
+
+public class MainMenuLC : MonoBehaviour {
+
+	//Main Menu Items
+	public GameObject MainMenuStuff;
+
+	//Campaign
+	public RawImage CampaignSelectBackground;
+	public RawImage MissionSelect_SelectBackground;
+	public RawImage CoopSelectBackground;
+	public Text CampaignMainButton;
+	public Text CampaignMissionSelectButton;
+	public Text CampaignCoOpButton;
+
+	//Multiplayer
+	public RawImage MultiplayerSelectBackground;
+	public RawImage HostMatchSelectBackground;
+	public RawImage FindMatchSelectBackground;
+	public Text MultiPlayerMainButton;
+	public Text MultiPlayerHostGameButton;
+	public Text MultiPlayerFindGameButton;
+
+	//Practice
+	public RawImage PracticeSelectBackground;
+	public RawImage TutorialSelectBackground;
+	public RawImage TestArenaSelectBackground;
+	public Text PracticeMainButton;
+	public Text PracticeTutorialButton;
+	public Text PracticeTestArena;
+
+	//Color
+	public Color SelectColor;
+	public Color deSelectColor;
+
+	//Minor buttons
+	public Text SettingsButton;
+	public Text QuitGameButton;
+
+	//Settings buttons
+	//public Text SettingsTitle;
+	//public Text SettingsBackButton;
+	public GameObject SettingsStuff;
+
+	//VolumeControls
+	public Text EffectVolume;
+	public Slider EffectVolumeSlider;
+	public Text MasterVolume;
+	public Slider MasterVolumeSlider;
+	public Text MusicVolume;
+	public Slider MusicVolumeSlider;
+
+	//Subtitles
+	public RawImage SubtitlesSelectOnImage;
+	public RawImage SubtitlesSelectOffImage;
+	public Text SubtitlesOnText;
+	public Text SubtitlesOffText;
+	public Color SubtitlesSelectColor;
+	public bool SubtitlesChoice = false;
+
+	public GameObject ScreenFader;
+	public bool Selected;
+
+	void awake(){
+
+	}
+
+	void Start () {
+		StartCoroutine (GameStartAnim ());
+		PlayerPrefs.SetFloat ("MasterVolume", MasterVolumeSlider.value);
+		PlayerPrefs.SetFloat ("MusicVolume", MasterVolumeSlider.value);
+		PlayerPrefs.SetFloat ("EffectVolume", MasterVolumeSlider.value);
+		PlayerPrefs.SetString ("SubtitlesChoice", "Off");
+	}
+
+	void Update () {
+		EffectVolume.text = "" + EffectVolumeSlider.value;
+		MasterVolume.text = "" + MasterVolumeSlider.value;
+		MusicVolume.text = "" + MusicVolumeSlider.value;
+
+	}
+
+
+	//CAMPAIGN
+	public void CampaignHoverSelect(){
+		CampaignSelectBackground.gameObject.SetActive(true);
+		CampaignMainButton.color = Color.black;
+		CampaignMissionSelectButton.gameObject.SetActive (true);
+		CampaignCoOpButton.gameObject.SetActive (true);
+	}
+
+	public void CampaignSelect(){
+		CampaignSelectBackground.gameObject.SetActive(true);
+		CampaignMainButton.color = Color.black;
+		Selected = true;
+	}
+		
+	public void CampaignHoverUnSelect(){
+
+		if (Selected == true) {
+			CampaignHoverSelect ();
+		} else {
+			CampaignSelectBackground.gameObject.SetActive(false);
+			CampaignMainButton.color = Color.white;
+			CampaignMissionSelectButton.gameObject.SetActive (false);
+			CampaignCoOpButton.gameObject.SetActive (false);
+		}
+		Selected = false;
+	}
+		
+	public void MissionSelectHover(){
+		MissionSelect_SelectBackground.gameObject.SetActive (true);
+		CampaignMissionSelectButton.color = SelectColor;
+	}
+
+	public void MissionSelectUnHover(){
+		MissionSelect_SelectBackground.gameObject.SetActive (false);
+		CampaignMissionSelectButton.color = deSelectColor;
+	}
+
+	public void MissionSelectbutton(){
+		EditorSceneManager.LoadScene ("MissionSelect");
+	}
+
+	public void CoopHover(){
+		CoopSelectBackground.gameObject.SetActive (true);
+		CampaignCoOpButton.color = SelectColor;
+	}
+
+	public void CoopUnHover(){
+		CoopSelectBackground.gameObject.SetActive (false);
+		CampaignCoOpButton.color = deSelectColor;
+	}
+
+	public void CoopSelectbutton(){
+		
+	}
+
+
+	//MULTIPLAYER 
+	public void MultiplayerMenuHoverSelect(){
+		MultiplayerSelectBackground.gameObject.SetActive(true);
+		MultiPlayerMainButton.color = Color.black;
+		MultiPlayerFindGameButton.gameObject.SetActive (true);
+		MultiPlayerHostGameButton.gameObject.SetActive (true);
+	}
+
+	public void MultiplayerMenuSelect(){
+		MultiplayerSelectBackground.gameObject.SetActive(true);
+		MultiPlayerMainButton.color = Color.black;
+		Selected = true;
+	}
+
+	public void MultiplayerMenuHoverUnSelect(){
+		if (Selected == true) {
+			MultiPlayerFindGameButton.gameObject.SetActive (true);
+			MultiPlayerHostGameButton.gameObject.SetActive (true);
+		}else{
+			MultiplayerSelectBackground.gameObject.SetActive(false);
+			MultiPlayerMainButton.color = Color.white;
+			MultiPlayerFindGameButton.gameObject.SetActive (false);
+			MultiPlayerHostGameButton.gameObject.SetActive (false);
+		}
+		Selected = false;
+	}
+
+	//MP Find Match
+	public void FindMatchHover(){
+		FindMatchSelectBackground.gameObject.SetActive (true);
+		MultiPlayerFindGameButton.color = Color.black;
+	}
+
+	public void FindMatchUnHover(){
+		FindMatchSelectBackground.gameObject.SetActive (false);
+		MultiPlayerFindGameButton.color = Color.white;
+	}
+
+	public void FindMatchSelect(){
+
+	}
+		
+	//MP Host Match
+	public void HostMatchHover(){
+	 	HostMatchSelectBackground.gameObject.SetActive (true);
+		MultiPlayerHostGameButton.color = Color.black;
+	}
+
+	public void HostMatchUnHover(){
+		HostMatchSelectBackground.gameObject.SetActive (false);
+		MultiPlayerHostGameButton.color = Color.white;
+	}
+
+	public void HostMatchSelect(){
+
+	}
+
+	//PRACTICE
+	public void PracticeMenuHoverSelect(){
+		PracticeSelectBackground.gameObject.SetActive(true);
+		PracticeMainButton.color = Color.black;
+		PracticeTestArena.gameObject.SetActive (true);
+		PracticeTutorialButton.gameObject.SetActive (true);
+
+	}
+
+	public void PracticeMenuSelect(){
+		PracticeSelectBackground.gameObject.SetActive(true);
+		PracticeMainButton.color = Color.black;
+		Selected = true;
+	}
+
+	public void PracticeArenaHover(){
+		TestArenaSelectBackground.gameObject.SetActive (true);
+		PracticeTestArena.color = Color.black;
+	}
+
+	public void PracticeArenaUnHover(){
+		TestArenaSelectBackground.gameObject.SetActive (false);
+		PracticeTestArena.color = Color.white;
+	}
+
+	public void PracticeAreanSelect(){
+		PlayerPrefs.SetString ("Mission Select", "Practice");
+	}
+
+	public void TutorialHover(){
+		TutorialSelectBackground.gameObject.SetActive (true);
+		PracticeTutorialButton.color = Color.black;
+	}
+
+	public void TutorialUnHover(){
+		TutorialSelectBackground.gameObject.SetActive (false);
+		PracticeTutorialButton.color = Color.white;
+	}
+
+	public void TutorialSelect(){
+		PlayerPrefs.SetString ("Mission Select", "Tutorial");
+	}
+
+	public void PracticeMenuHoverUnSelect(){
+
+		if (Selected == true) {
+			PracticeTestArena.gameObject.SetActive (true);
+			PracticeTutorialButton.gameObject.SetActive (true);
+		} else {
+			PracticeSelectBackground.gameObject.SetActive(false);
+			PracticeMainButton.color = Color.white;
+			PracticeTestArena.gameObject.SetActive (false);
+			PracticeTutorialButton.gameObject.SetActive (false);
+		}
+		Selected = false;
+	}
+
+	//Settings
+	public void SettingMenuSelect(){
+		/*SettingsButton.gameObject.SetActive (false);
+		Title.gameObject.SetActive (false);
+		CampaignMainButton.gameObject.SetActive (false);
+		MultiPlayerMainButton.gameObject.SetActive (false);
+		PracticeMainButton.gameObject.SetActive (false);
+		QuitGameButton.gameObject.SetActive (false);
+		*/
+		MainMenuStuff.gameObject.SetActive (false);
+		//SettingsBackButton.gameObject.SetActive (true);
+		//SettingsTitle.gameObject.SetActive (true);
+		SettingsStuff.gameObject.SetActive (true);
+		SubtitlesOff ();
+	}
+
+	public void SettingsBackButtonSelect(){
+		SettingsStuff.gameObject.SetActive (false);
+		//SettingsBackButton.gameObject.SetActive (false);
+		//SettingsTitle.gameObject.SetActive (false);
+		/*Title.gameObject.SetActive (true);
+		CampaignMainButton.gameObject.SetActive (true);
+		MultiPlayerMainButton.gameObject.SetActive (true);
+		PracticeMainButton.gameObject.SetActive (true);
+		QuitGameButton.gameObject.SetActive (true);
+		SettingsButton.gameObject.SetActive (true);
+		*/
+		MainMenuStuff.gameObject.SetActive (true);
+	}
+
+	public void SubtitlesOn(){
+		PlayerPrefs.SetString ("SubtitlesChoice", "On");
+		SubtitlesOnText.color = SubtitlesSelectColor;
+		SubtitlesSelectOnImage.gameObject.SetActive (true);
+		SubtitlesSelectOffImage.gameObject.SetActive (false);
+		SubtitlesOffText.color = deSelectColor;
+	}
+
+	public void SubtitlesOff(){
+		PlayerPrefs.SetString ("SubtitlesChoice", "Off");
+		SubtitlesOffText.color = SubtitlesSelectColor;
+		SubtitlesSelectOnImage.gameObject.SetActive (false);
+		SubtitlesSelectOffImage.gameObject.SetActive (true);
+		SubtitlesOnText.color = deSelectColor;
+	}
+
+	public void QuitGame(){
+		Application.Quit ();
+	}
+
+	public IEnumerator GameStartAnim(){
+		ScreenFader.gameObject.GetComponent<Animator> ().Play ("Screen_Fade_In", -1, -0.5f);
+		yield return new WaitForSeconds (2.0f);
+		ScreenFader.gameObject.SetActive(false);
+	}
+
+	public void SetVolumePrefs(){
+		PlayerPrefs.SetFloat ("MasterVolume", MasterVolumeSlider.value);
+		PlayerPrefs.SetFloat ("MusicVolume", MasterVolumeSlider.value);
+		PlayerPrefs.SetFloat ("EffectVolume", MasterVolumeSlider.value);
+	}
+}

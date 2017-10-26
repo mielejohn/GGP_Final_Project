@@ -1,0 +1,188 @@
+fileFormatVersion: 2
+guid: 5d84070a406d2cd45801ca5e282b2ed7
+timeCreated: 1506300147
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: DASH_MISCU_Frame_MayaASCII1:polySurface36
+    100002: DASH_MISCU_Frame_MayaASCII:Head1
+    100004: DASH_MISCU_Frame_MayaASCII:LeftFoot
+    100006: DASH_MISCU_Frame_MayaASCII:LeftHand
+    100008: DASH_MISCU_Frame_MayaASCII:LeftShoulder
+    100010: DASH_MISCU_Frame_MayaASCII:LeftToe
+    100012: DASH_MISCU_Frame_MayaASCII:LeftWaistSkirt
+    100014: DASH_MISCU_Frame_MayaASCII:LowerChest
+    100016: DASH_MISCU_Frame_MayaASCII:LoweRightArm
+    100018: DASH_MISCU_Frame_MayaASCII:LowerLeftHand
+    100020: DASH_MISCU_Frame_MayaASCII:LowerLeftLeg
+    100022: DASH_MISCU_Frame_MayaASCII:LowerRightLeg
+    100024: DASH_MISCU_Frame_MayaASCII:RightFoot
+    100026: DASH_MISCU_Frame_MayaASCII:RightHand
+    100028: DASH_MISCU_Frame_MayaASCII:RightShoulder
+    100030: DASH_MISCU_Frame_MayaASCII:RightToe
+    100032: DASH_MISCU_Frame_MayaASCII:RightWaistSkirt
+    100034: DASH_MISCU_Frame_MayaASCII:UpperLeftarm
+    100036: DASH_MISCU_Frame_MayaASCII:UpperLeftleg
+    100038: DASH_MISCU_Frame_MayaASCII:UpperRightArm
+    100040: DASH_MISCU_Frame_MayaASCII:UpperRightLeg
+    100042: DASH_MISCU_Frame_MayaASCII:Waist2
+    100044: //RootNode
+    400000: DASH_MISCU_Frame_MayaASCII1:polySurface36
+    400002: DASH_MISCU_Frame_MayaASCII:Head1
+    400004: DASH_MISCU_Frame_MayaASCII:LeftFoot
+    400006: DASH_MISCU_Frame_MayaASCII:LeftHand
+    400008: DASH_MISCU_Frame_MayaASCII:LeftShoulder
+    400010: DASH_MISCU_Frame_MayaASCII:LeftToe
+    400012: DASH_MISCU_Frame_MayaASCII:LeftWaistSkirt
+    400014: DASH_MISCU_Frame_MayaASCII:LowerChest
+    400016: DASH_MISCU_Frame_MayaASCII:LoweRightArm
+    400018: DASH_MISCU_Frame_MayaASCII:LowerLeftHand
+    400020: DASH_MISCU_Frame_MayaASCII:LowerLeftLeg
+    400022: DASH_MISCU_Frame_MayaASCII:LowerRightLeg
+    400024: DASH_MISCU_Frame_MayaASCII:RightFoot
+    400026: DASH_MISCU_Frame_MayaASCII:RightHand
+    400028: DASH_MISCU_Frame_MayaASCII:RightShoulder
+    400030: DASH_MISCU_Frame_MayaASCII:RightToe
+    400032: DASH_MISCU_Frame_MayaASCII:RightWaistSkirt
+    400034: DASH_MISCU_Frame_MayaASCII:UpperLeftarm
+    400036: DASH_MISCU_Frame_MayaASCII:UpperLeftleg
+    400038: DASH_MISCU_Frame_MayaASCII:UpperRightArm
+    400040: DASH_MISCU_Frame_MayaASCII:UpperRightLeg
+    400042: DASH_MISCU_Frame_MayaASCII:Waist2
+    400044: //RootNode
+    2300000: DASH_MISCU_Frame_MayaASCII1:polySurface36
+    2300002: DASH_MISCU_Frame_MayaASCII:Head1
+    2300004: DASH_MISCU_Frame_MayaASCII:LeftFoot
+    2300006: DASH_MISCU_Frame_MayaASCII:LeftHand
+    2300008: DASH_MISCU_Frame_MayaASCII:LeftShoulder
+    2300010: DASH_MISCU_Frame_MayaASCII:LeftToe
+    2300012: DASH_MISCU_Frame_MayaASCII:LeftWaistSkirt
+    2300014: DASH_MISCU_Frame_MayaASCII:LowerChest
+    2300016: DASH_MISCU_Frame_MayaASCII:LoweRightArm
+    2300018: DASH_MISCU_Frame_MayaASCII:LowerLeftHand
+    2300020: DASH_MISCU_Frame_MayaASCII:LowerLeftLeg
+    2300022: DASH_MISCU_Frame_MayaASCII:LowerRightLeg
+    2300024: DASH_MISCU_Frame_MayaASCII:RightFoot
+    2300026: DASH_MISCU_Frame_MayaASCII:RightHand
+    2300028: DASH_MISCU_Frame_MayaASCII:RightShoulder
+    2300030: DASH_MISCU_Frame_MayaASCII:RightToe
+    2300032: DASH_MISCU_Frame_MayaASCII:RightWaistSkirt
+    2300034: DASH_MISCU_Frame_MayaASCII:UpperLeftarm
+    2300036: DASH_MISCU_Frame_MayaASCII:UpperLeftleg
+    2300038: DASH_MISCU_Frame_MayaASCII:UpperRightArm
+    2300040: DASH_MISCU_Frame_MayaASCII:UpperRightLeg
+    2300042: DASH_MISCU_Frame_MayaASCII:Waist2
+    3300000: DASH_MISCU_Frame_MayaASCII1:polySurface36
+    3300002: DASH_MISCU_Frame_MayaASCII:Head1
+    3300004: DASH_MISCU_Frame_MayaASCII:LeftFoot
+    3300006: DASH_MISCU_Frame_MayaASCII:LeftHand
+    3300008: DASH_MISCU_Frame_MayaASCII:LeftShoulder
+    3300010: DASH_MISCU_Frame_MayaASCII:LeftToe
+    3300012: DASH_MISCU_Frame_MayaASCII:LeftWaistSkirt
+    3300014: DASH_MISCU_Frame_MayaASCII:LowerChest
+    3300016: DASH_MISCU_Frame_MayaASCII:LoweRightArm
+    3300018: DASH_MISCU_Frame_MayaASCII:LowerLeftHand
+    3300020: DASH_MISCU_Frame_MayaASCII:LowerLeftLeg
+    3300022: DASH_MISCU_Frame_MayaASCII:LowerRightLeg
+    3300024: DASH_MISCU_Frame_MayaASCII:RightFoot
+    3300026: DASH_MISCU_Frame_MayaASCII:RightHand
+    3300028: DASH_MISCU_Frame_MayaASCII:RightShoulder
+    3300030: DASH_MISCU_Frame_MayaASCII:RightToe
+    3300032: DASH_MISCU_Frame_MayaASCII:RightWaistSkirt
+    3300034: DASH_MISCU_Frame_MayaASCII:UpperLeftarm
+    3300036: DASH_MISCU_Frame_MayaASCII:UpperLeftleg
+    3300038: DASH_MISCU_Frame_MayaASCII:UpperRightArm
+    3300040: DASH_MISCU_Frame_MayaASCII:UpperRightLeg
+    3300042: DASH_MISCU_Frame_MayaASCII:Waist2
+    4300000: DASH_MISCU_Frame_MayaASCII:UpperLeftarm
+    4300002: DASH_MISCU_Frame_MayaASCII:LowerRightLeg
+    4300004: DASH_MISCU_Frame_MayaASCII:UpperRightLeg
+    4300006: DASH_MISCU_Frame_MayaASCII:LeftFoot
+    4300008: DASH_MISCU_Frame_MayaASCII:LowerLeftHand
+    4300010: DASH_MISCU_Frame_MayaASCII:LowerLeftLeg
+    4300012: DASH_MISCU_Frame_MayaASCII:RightShoulder
+    4300014: DASH_MISCU_Frame_MayaASCII:LowerChest
+    4300016: DASH_MISCU_Frame_MayaASCII:Waist2
+    4300018: DASH_MISCU_Frame_MayaASCII:RightWaistSkirt
+    4300020: DASH_MISCU_Frame_MayaASCII:UpperLeftleg
+    4300022: DASH_MISCU_Frame_MayaASCII:LoweRightArm
+    4300024: DASH_MISCU_Frame_MayaASCII:LeftHand
+    4300026: DASH_MISCU_Frame_MayaASCII:LeftWaistSkirt
+    4300028: DASH_MISCU_Frame_MayaASCII:RightHand
+    4300030: DASH_MISCU_Frame_MayaASCII:RightFoot
+    4300032: DASH_MISCU_Frame_MayaASCII:LeftToe
+    4300034: DASH_MISCU_Frame_MayaASCII:RightToe
+    4300036: DASH_MISCU_Frame_MayaASCII:UpperRightArm
+    4300038: DASH_MISCU_Frame_MayaASCII:Head1
+    4300040: DASH_MISCU_Frame_MayaASCII:LeftShoulder
+    4300042: DASH_MISCU_Frame_MayaASCII1:polySurface36
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
