@@ -3,9 +3,7 @@
 
 ### Listed Below are the steps for adding to the GitHub repository
 
-I would like to first state if you aren't using TortoiseSVN, use it, you can download it, [here](https://tortoisesvn.net/downloads.html)
-Once that is done, if I,  John Miele, does not have you aa a contributor please contact me with your
-GitHub username and I will add you. Once you accept the invitation to collaborate follow these steps.
+I would like to first state if you aren't using TortoiseSVN, use it, you can download it, [here](https://tortoisesvn.net/downloads.html) . Once that is done, if I, John Miele, do not have you aa a contributor please contact me with your GitHub username and I will add you. Once you accept the invitation to collaborate follow these steps.
 
 1. On the main page go to Branches right beneath the main progress bar.
 2. Create a branch labled (Name)'s Branch. (You can find mine in that section as an example)
