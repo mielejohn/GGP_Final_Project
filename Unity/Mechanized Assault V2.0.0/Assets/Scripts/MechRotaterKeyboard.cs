@@ -23,11 +23,11 @@ public class MechRotaterKeyboard : MonoBehaviour {
 	}
 
 	public void On_D_down(){
-		this.transform.Rotate (new Vector3(0, -rotation, 0) *Time.deltaTime);
+		this.transform.Rotate (new Vector3(0, -rotation, 0) *Time.deltaTime*5.0f);
 	}
 
 	public void On_A_down(){
-		this.transform.Rotate (new Vector3(0, rotation, 0) *Time.deltaTime);
+		this.transform.Rotate (new Vector3(0, rotation, 0) *Time.deltaTime*5.0f);
 	}
 
 	public void RotationReset(){
