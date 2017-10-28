@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class MainMenuLC : MonoBehaviour {
 
@@ -42,8 +42,6 @@ public class MainMenuLC : MonoBehaviour {
 	public Text QuitGameButton;
 
 	//Settings buttons
-	//public Text SettingsTitle;
-	//public Text SettingsBackButton;
 	public GameObject SettingsStuff;
 
 	//VolumeControls
@@ -123,7 +121,7 @@ public class MainMenuLC : MonoBehaviour {
 	}
 
 	public void MissionSelectbutton(){
-		EditorSceneManager.LoadScene ("MissionSelect");
+		SceneManager.LoadScene ("MissionSelect",LoadSceneMode.Single);
 	}
 
 	public void CoopHover(){
@@ -257,31 +255,13 @@ public class MainMenuLC : MonoBehaviour {
 
 	//Settings
 	public void SettingMenuSelect(){
-		/*SettingsButton.gameObject.SetActive (false);
-		Title.gameObject.SetActive (false);
-		CampaignMainButton.gameObject.SetActive (false);
-		MultiPlayerMainButton.gameObject.SetActive (false);
-		PracticeMainButton.gameObject.SetActive (false);
-		QuitGameButton.gameObject.SetActive (false);
-		*/
 		MainMenuStuff.gameObject.SetActive (false);
-		//SettingsBackButton.gameObject.SetActive (true);
-		//SettingsTitle.gameObject.SetActive (true);
 		SettingsStuff.gameObject.SetActive (true);
 		SubtitlesOff ();
 	}
 
 	public void SettingsBackButtonSelect(){
 		SettingsStuff.gameObject.SetActive (false);
-		//SettingsBackButton.gameObject.SetActive (false);
-		//SettingsTitle.gameObject.SetActive (false);
-		/*Title.gameObject.SetActive (true);
-		CampaignMainButton.gameObject.SetActive (true);
-		MultiPlayerMainButton.gameObject.SetActive (true);
-		PracticeMainButton.gameObject.SetActive (true);
-		QuitGameButton.gameObject.SetActive (true);
-		SettingsButton.gameObject.SetActive (true);
-		*/
 		MainMenuStuff.gameObject.SetActive (true);
 	}
 

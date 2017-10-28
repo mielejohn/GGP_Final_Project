@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class MissionSelectLC : MonoBehaviour {
 
@@ -33,7 +33,7 @@ public class MissionSelectLC : MonoBehaviour {
 
 	public void MissionOneSelect(){
 		Mission1.color=SelectColor;
-		EditorSceneManager.LoadScene ("MechSelectionScene");
+		SceneManager.LoadScene ("MechSelectionScene",LoadSceneMode.Single);
 	}
 
 	public void MissionOneHover(){
@@ -48,7 +48,7 @@ public class MissionSelectLC : MonoBehaviour {
 
 	public void MissionTwoSelect() {
 		Mission2.color=SelectColor;
-		EditorSceneManager.LoadScene ("MechSelectionScene");
+		SceneManager.LoadScene ("MechSelectionScene",LoadSceneMode.Single);
 	}
 
 	public void MissionTwoHover(){
@@ -63,7 +63,7 @@ public class MissionSelectLC : MonoBehaviour {
 
 	public void MissionThreeSelect() {
 		Mission3.color=SelectColor;
-		EditorSceneManager.LoadScene ("MechSelectionScene");
+		SceneManager.LoadScene ("MechSelectionScene",LoadSceneMode.Single);
 	}
 
 	public void MissionThreeHover(){
@@ -78,7 +78,7 @@ public class MissionSelectLC : MonoBehaviour {
 		
 	public void MissionFourSelect() {
 		Mission4.color=SelectColor;
-		EditorSceneManager.LoadScene ("MechSelectionScene");
+		SceneManager.LoadScene ("MechSelectionScene",LoadSceneMode.Single);
 	}
 
 	public void MissionFourHover(){
@@ -92,7 +92,7 @@ public class MissionSelectLC : MonoBehaviour {
 	}
 
 	public void MainMenuButton() {
-		EditorSceneManager.LoadScene ("TitleScreen");
+		SceneManager.LoadScene ("TitleScreen",LoadSceneMode.Single);
 	}
 
 	public IEnumerator GameStartAnim(){
