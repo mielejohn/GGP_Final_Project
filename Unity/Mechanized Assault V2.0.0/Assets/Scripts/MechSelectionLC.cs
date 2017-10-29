@@ -22,6 +22,8 @@ public class MechSelectionLC : MonoBehaviour {
 	public GameObject Assault_Frame;
 	public GameObject Support_Frame;
 
+	public GameObject chosenFrame;
+
 	//Armor Items
 	public int Armor;
 	public Text ArmorNumberText;
@@ -75,6 +77,7 @@ public class MechSelectionLC : MonoBehaviour {
 	[SerializeField] public int RWeapon_Damage;
 	[SerializeField] public int RWeapon_Range;
 	[SerializeField] public int RWeapon_Accuray;
+
 
 	//MISC
 	//------------------------------------------------------------------
@@ -154,6 +157,7 @@ public class MechSelectionLC : MonoBehaviour {
 			MRK.RotationReset ();
 			Assault_Frame.gameObject.SetActive (false);
 			DASH_Frame.gameObject.SetActive (true);
+			chosenFrame = DASH_Frame;
 			Frame_Name.text = "Dash";
 
 			//Variables
@@ -170,6 +174,7 @@ public class MechSelectionLC : MonoBehaviour {
 			DASH_Frame.gameObject.SetActive (false);
 			Support_Frame.SetActive (false);
 			Assault_Frame.gameObject.SetActive (true);
+			chosenFrame = Assault_Frame;
 			Frame_Name.text = "Assault";
 
 			//Variables
@@ -185,6 +190,7 @@ public class MechSelectionLC : MonoBehaviour {
 			MRK.RotationReset ();
 			Assault_Frame.gameObject.SetActive (false);
 			Support_Frame.gameObject.SetActive (true);
+			chosenFrame = Support_Frame;
 			Frame_Name.text = "Support";
 
 			//Variables
@@ -298,9 +304,13 @@ public class MechSelectionLC : MonoBehaviour {
 		case 0:
 			MRK.RotationReset ();
 
+			L_Assault_Rifle.transform.parent = null;
+
 			L_SMG.SetActive (true);
 			L_Assault_Rifle.SetActive (false);
 			L_SMG.gameObject.transform.position = LWeaponSpawn.gameObject.transform.position;
+			L_SMG.gameObject.transform.parent = chosenFrame.transform;
+
 			LWeapon_Name.text = "SMG";
 
 			//Variables
@@ -313,10 +323,16 @@ public class MechSelectionLC : MonoBehaviour {
 		case 1:
 			MRK.RotationReset ();
 
+			L_SMG.transform.parent = null;
+			L_SniperRifle.transform.parent = null;
+
 			L_Assault_Rifle.SetActive (true);
 			L_SMG.SetActive (false);
 			L_SniperRifle.SetActive (false);
+
 			L_Assault_Rifle.gameObject.transform.position = LWeaponSpawn.gameObject.transform.position;
+			L_Assault_Rifle.gameObject.transform.parent = chosenFrame.transform;
+
 			LWeapon_Name.text = "Assault Rifle";
 
 			//Variables
@@ -329,9 +345,14 @@ public class MechSelectionLC : MonoBehaviour {
 		case 2:
 			MRK.RotationReset ();
 
+			L_Assault_Rifle.transform.parent = null;
+
 			L_Assault_Rifle.SetActive (false);
 			L_SniperRifle.gameObject.SetActive (true);
+
 			L_SniperRifle.gameObject.transform.position = LWeaponSpawn.gameObject.transform.position;
+			L_SniperRifle.gameObject.transform.parent = chosenFrame.transform;
+
 			LWeapon_Name.text = "Sniper";
 
 			//Variables
@@ -380,9 +401,14 @@ public class MechSelectionLC : MonoBehaviour {
 		case 0:
 			MRK.RotationReset ();
 
+			R_Assault_Rifle.transform.parent = null;
+
 			R_SMG.SetActive (true);
 			R_Assault_Rifle.SetActive (false);
+
 			R_SMG.gameObject.transform.position = RWeaponSpawn.gameObject.transform.position;
+			R_SMG.gameObject.transform.parent = chosenFrame.transform;
+
 			RWeapon_Name.text = "SMG";
 
 			//Variables
@@ -395,10 +421,16 @@ public class MechSelectionLC : MonoBehaviour {
 		case 1:
 			MRK.RotationReset ();
 
+			R_SMG.transform.parent = null;
+			R_SniperRifle.transform.parent = null;
+
 			R_Assault_Rifle.SetActive (true);
 			R_SMG.SetActive (false);
 			R_SniperRifle.SetActive (false);
+
 			R_Assault_Rifle.gameObject.transform.position = RWeaponSpawn.gameObject.transform.position;
+			R_Assault_Rifle.gameObject.transform.parent = chosenFrame.transform;
+
 			RWeapon_Name.text = "Assault Rifle";
 
 			//Variables
@@ -411,9 +443,14 @@ public class MechSelectionLC : MonoBehaviour {
 		case 2:
 			MRK.RotationReset ();
 
+			R_Assault_Rifle.transform.parent = null;
+
 			R_Assault_Rifle.SetActive (false);
 			R_SniperRifle.gameObject.SetActive (true);
+
 			R_SniperRifle.gameObject.transform.position = RWeaponSpawn.gameObject.transform.position;
+			R_SniperRifle.gameObject.transform.parent = chosenFrame.transform;
+
 			RWeapon_Name.text = "Sniper";
 
 			//Variables
@@ -448,6 +485,7 @@ public class MechSelectionLC : MonoBehaviour {
 			MenuType = "Weapons";
 		} else {
 			StorePayerValues ();
+			SceneManager.LoadScene ("PracticeArenaScene",LoadSceneMode.Single);
 		}
 	}
 
