@@ -29,13 +29,15 @@ public class FrameController : MonoBehaviour {
 	public GameObject R_Sniper_Rifle;
 
 	// MISC.
+	public bool LockedOn = false;
 	[SerializeField]public bool OnGround=true;
 	[SerializeField] public bool canBoost = true;
+	public GameObject enemy;
 
 	void Start () {
 		LeftWeapon_Spawn = GameObject.FindGameObjectWithTag ("LWS");
 		RightWeapon_Spawn = GameObject.FindGameObjectWithTag ("RWS");
-
+		enemy = GameObject.FindGameObjectWithTag ("Enemy");
 		SpawnLeftWeapon ();
 		SpawnRightWeapon ();
 	}
@@ -67,6 +69,25 @@ public class FrameController : MonoBehaviour {
 
 		this.gameObject.transform.rotation *= Quaternion.Euler (0.0f, Input.GetAxis ("Mouse X") * Time.deltaTime * MouseSensitivity, 0.0f);
 		PlayerCamera.gameObject.transform.localEulerAngles = new Vector3 (CameraRotationLimit, 0.0f, 0.0f);
+
+		if (Input.GetButtonDown ("LockOn")) {
+			RaycastHit hit = new RaycastHit();
+			//Physics.Raycast (transform.position, transform.forward, out hit);
+			//Vector3 fwd = transform.TransformDirection(Vector3.forward);
+			//if(Physics.Raycast(transform.forward, fwd, 500)){
+			if (Physics.Raycast (transform.position, transform.forward, out hit) && LockedOn == false) {
+				if (hit.collider.gameObject.tag == "Enemy") {
+					Debug.Log ("I hit the enemy, I think...");
+					//this.transform.localRotation.y = enemy.transform.position;
+					//transform.rotation *= Quaternion.LookRotation(enemy.transform.position - transform.position, Vector3.up);
+					LockedOn = true;
+				}
+			}
+		}
+
+		if (LockedOn == true) {
+			transform.rotation = Quaternion.LookRotation(enemy.transform.position - transform.position, Vector3.up);
+		}
 	}
 
 	void Move(float movex, float movez){
