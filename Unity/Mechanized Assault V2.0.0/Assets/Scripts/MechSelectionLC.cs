@@ -67,6 +67,14 @@ public class MechSelectionLC : MonoBehaviour {
 	[SerializeField] public int LWeapon_Damage;
 	[SerializeField] public int LWeapon_Range;
 	[SerializeField] public int LWeapon_Accuray;
+	[SerializeField] public int LWeapon_AmmoCount;
+
+	//LeftWeaponStats
+	public Text L_DamageText;
+	public Text L_RangeText;
+	public Text L_AccuracyText;
+	public Text L_AmmoCountText;
+
 
 	//RightWeapon
 	public int RWeapon_Number = 0;
@@ -77,6 +85,13 @@ public class MechSelectionLC : MonoBehaviour {
 	[SerializeField] public int RWeapon_Damage;
 	[SerializeField] public int RWeapon_Range;
 	[SerializeField] public int RWeapon_Accuray;
+	[SerializeField] public int RWeapon_AmmoCount;
+
+	//RightWeaponStats
+	public Text R_DamageText;
+	public Text R_RangeText;
+	public Text R_AccuracyText;
+	public Text R_AmmoCountText;
 
 
 	//MISC
@@ -317,6 +332,12 @@ public class MechSelectionLC : MonoBehaviour {
 			LWeapon_Damage = 100;
 			LWeapon_Accuray = 50;
 			LWeapon_Range = 75;
+			LWeapon_AmmoCount = 400;
+
+			L_DamageText.text = LWeapon_Damage + "";
+			L_AccuracyText.text = LWeapon_Accuray + "";
+			L_RangeText.text = LWeapon_Range + "";
+			L_AmmoCountText.text = LWeapon_AmmoCount + "";
 
 			break;
 
@@ -339,6 +360,12 @@ public class MechSelectionLC : MonoBehaviour {
 			LWeapon_Damage = 150;
 			LWeapon_Accuray = 60;
 			LWeapon_Range = 65;
+			LWeapon_AmmoCount = 300;
+
+			L_DamageText.text = LWeapon_Damage + "";
+			L_AccuracyText.text = LWeapon_Accuray + "";
+			L_RangeText.text = LWeapon_Range + "";
+			L_AmmoCountText.text = LWeapon_AmmoCount + "";
 
 			break;
 
@@ -359,6 +386,12 @@ public class MechSelectionLC : MonoBehaviour {
 			LWeapon_Damage = 300;
 			LWeapon_Accuray = 80;
 			LWeapon_Range = 50;
+			LWeapon_AmmoCount = 100;
+
+			L_DamageText.text = LWeapon_Damage + "";
+			L_AccuracyText.text = LWeapon_Accuray + "";
+			L_RangeText.text = LWeapon_Range + "";
+			L_AmmoCountText.text = LWeapon_AmmoCount + "";
 
 			break;
 		}
@@ -415,6 +448,12 @@ public class MechSelectionLC : MonoBehaviour {
 			RWeapon_Damage = 100;
 			RWeapon_Accuray = 50;
 			RWeapon_Range = 75;
+			RWeapon_AmmoCount = 400;
+
+			R_DamageText.text = RWeapon_Damage + "";
+			R_AccuracyText.text = RWeapon_Accuray + "";
+			R_RangeText.text = RWeapon_Range + "";
+			R_AmmoCountText.text =RWeapon_AmmoCount + "";
 
 			break;
 
@@ -437,7 +476,12 @@ public class MechSelectionLC : MonoBehaviour {
 			RWeapon_Damage = 150;
 			RWeapon_Accuray = 60;
 			RWeapon_Range = 65;
+			RWeapon_AmmoCount = 300;
 
+			R_DamageText.text = RWeapon_Damage + "";
+			R_AccuracyText.text = RWeapon_Accuray + "";
+			R_RangeText.text = RWeapon_Range + "";
+			R_AmmoCountText.text =RWeapon_AmmoCount + "";
 			break;
 
 		case 2:
@@ -457,7 +501,12 @@ public class MechSelectionLC : MonoBehaviour {
 			RWeapon_Damage = 300;
 			RWeapon_Accuray = 80;
 			RWeapon_Range = 50;
+			RWeapon_AmmoCount = 100;
 
+			R_DamageText.text = RWeapon_Damage + "";
+			R_AccuracyText.text = RWeapon_Accuray + "";
+			R_RangeText.text = RWeapon_Range + "";
+			R_AmmoCountText.text =RWeapon_AmmoCount + "";
 			break;
 		}
 	}

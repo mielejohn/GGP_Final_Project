@@ -51,7 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\DashFrameController.cs" />
+     <Compile Include="Assets\Scripts\FrameController.cs" />
      <Compile Include="Assets\Scripts\MainMenuLC.cs" />
      <Compile Include="Assets\Scripts\MechRotaterKeyboard.cs" />
      <Compile Include="Assets\Scripts\MechSelectionLC.cs" />
