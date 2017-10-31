@@ -51,12 +51,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Enemies\BasicEnemyScript.cs" />
      <Compile Include="Assets\Scripts\FrameController.cs" />
      <Compile Include="Assets\Scripts\MainMenuLC.cs" />
      <Compile Include="Assets\Scripts\MechRotaterKeyboard.cs" />
      <Compile Include="Assets\Scripts\MechSelectionLC.cs" />
      <Compile Include="Assets\Scripts\MissionSelectLC.cs" />
      <Compile Include="Assets\Scripts\PracticeArenaLC.cs" />
+     <Compile Include="Assets\Scripts\WeaponScripts\L_Assault_Rifle.cs" />
+     <Compile Include="Assets\Scripts\WeaponScripts\L_Sniper_Rifle.cs" />
+     <Compile Include="Assets\Scripts\WeaponScripts\R_Assault_Rifle.cs" />
+     <Compile Include="Assets\Scripts\WeaponScripts\R_Sniper_Rifle.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

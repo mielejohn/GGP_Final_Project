@@ -11,7 +11,7 @@ public class FrameController : MonoBehaviour {
 	[SerializeField] public float CameraRotationLimit = 0f;
 
 	//Speed and movement
-	private float Gspeed = 4500;
+	[SerializeField]public float Gspeed = 4500;
 	public Rigidbody RB;
 
 	//Spawns
@@ -65,12 +65,14 @@ public class FrameController : MonoBehaviour {
 			StartCoroutine(Boost ());
 		}
 		CameraRotationLimit -= Input.GetAxis ("Mouse Y") * CameraLimitSensitivity;
-		CameraRotationLimit = Mathf.Clamp (CameraRotationLimit, -10, 23);
+		CameraRotationLimit = Mathf.Clamp (CameraRotationLimit, -10, 17);
 
 		this.gameObject.transform.rotation *= Quaternion.Euler (0.0f, Input.GetAxis ("Mouse X") * Time.deltaTime * MouseSensitivity, 0.0f);
 		PlayerCamera.gameObject.transform.localEulerAngles = new Vector3 (CameraRotationLimit, 0.0f, 0.0f);
 
 		if (Input.GetButtonDown ("LockOn")) {
+			float tempY = transform.rotation.eulerAngles.y;
+			Debug.Log("the y rotation is" + tempY);
 			RaycastHit hit = new RaycastHit();
 			//Physics.Raycast (transform.position, transform.forward, out hit);
 			//Vector3 fwd = transform.TransformDirection(Vector3.forward);
@@ -82,10 +84,18 @@ public class FrameController : MonoBehaviour {
 					//transform.rotation *= Quaternion.LookRotation(enemy.transform.position - transform.position, Vector3.up);
 					LockedOn = true;
 				}
+			} else {
+
+				Debug.Log ("Lockon is false");
+				LockedOn = false;
+				Debug.Log("the y rotation for reset is" + tempY);
+				transform.rotation = Quaternion.Euler (0.0f, tempY, 0.0f);
+				//PlayerCamera.transform.rotation = Quaternion.Euler (0.0f, this.gameObject.transform.rotation.y, 0.0f);
 			}
 		}
 
 		if (LockedOn == true) {
+			Debug.Log ("LockOn is true");
 			transform.rotation = Quaternion.LookRotation(enemy.transform.position - transform.position, Vector3.up);
 		}
 	}
@@ -115,16 +125,16 @@ public class FrameController : MonoBehaviour {
 	public IEnumerator Boost(){
 		if (canBoost == true) {
 			canBoost = false;
-			Gspeed += 8000;
-			yield return new WaitForSeconds (0.7f);
-			Gspeed -= 8000;
+			Gspeed += 9000;
+			yield return new WaitForSeconds (0.5f);
+			Gspeed -= 9000;
 			StartCoroutine (BoostBuffer ());
 		}
 
 	}
 
 	public IEnumerator BoostBuffer(){
-		yield return new WaitForSeconds (1);
+		yield return new WaitForSeconds (0.70f);
 		canBoost = true;
 	}
 
