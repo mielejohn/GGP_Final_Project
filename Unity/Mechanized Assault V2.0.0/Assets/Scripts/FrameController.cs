@@ -13,6 +13,7 @@ public class FrameController : MonoBehaviour {
 	//Speed and movement
 	[SerializeField]public float Gspeed = 4500;
 	public Rigidbody RB;
+	float tempY = 0f;
 
 	//Spawns
 	public GameObject LeftWeapon_Spawn;
@@ -33,11 +34,13 @@ public class FrameController : MonoBehaviour {
 	[SerializeField]public bool OnGround=true;
 	[SerializeField] public bool canBoost = true;
 	public GameObject enemy;
+	public GameObject TestSpawn;
 
 	void Start () {
 		LeftWeapon_Spawn = GameObject.FindGameObjectWithTag ("LWS");
 		RightWeapon_Spawn = GameObject.FindGameObjectWithTag ("RWS");
 		enemy = GameObject.FindGameObjectWithTag ("Enemy");
+		TestSpawn = GameObject.FindGameObjectWithTag ("TestSpawn");
 		SpawnLeftWeapon ();
 		SpawnRightWeapon ();
 	}
@@ -71,7 +74,7 @@ public class FrameController : MonoBehaviour {
 		PlayerCamera.gameObject.transform.localEulerAngles = new Vector3 (CameraRotationLimit, 0.0f, 0.0f);
 
 		if (Input.GetButtonDown ("LockOn")) {
-			float tempY = transform.rotation.eulerAngles.y;
+			tempY = transform.rotation.eulerAngles.y;
 			Debug.Log("the y rotation is" + tempY);
 			RaycastHit hit = new RaycastHit();
 			//Physics.Raycast (transform.position, transform.forward, out hit);
@@ -86,10 +89,7 @@ public class FrameController : MonoBehaviour {
 				}
 			} else {
 
-				Debug.Log ("Lockon is false");
-				LockedOn = false;
-				Debug.Log("the y rotation for reset is" + tempY);
-				transform.rotation = Quaternion.Euler (0.0f, tempY, 0.0f);
+				ResetRotations ();
 				//PlayerCamera.transform.rotation = Quaternion.Euler (0.0f, this.gameObject.transform.rotation.y, 0.0f);
 			}
 		}
@@ -133,6 +133,13 @@ public class FrameController : MonoBehaviour {
 
 	}
 
+	public void ResetRotations(){
+		Debug.Log ("Lockon is false");
+		LockedOn = false;
+		Debug.Log("the y rotation for reset is" + tempY);
+		transform.rotation = Quaternion.Euler (0.0f, tempY, 0.0f);
+	}
+
 	public IEnumerator BoostBuffer(){
 		yield return new WaitForSeconds (0.70f);
 		canBoost = true;
@@ -143,19 +150,25 @@ public class FrameController : MonoBehaviour {
 
 		case 0:
 			GameObject L_SMG_I = Instantiate (L_SMG);
-			L_SMG_I.gameObject.transform.position = LeftWeapon_Spawn.transform.position;
+			Debug.Log ("L Weapon Spawned");
+			L_SMG_I.transform.position = LeftWeapon_Spawn.transform.position;
+			Debug.Log ("L Weapon positon Changed");
 			L_SMG_I.transform.parent = transform;
 			break;
 
 		case 1:
 			GameObject L_AssaultRifle_I = Instantiate (L_Assault_Rifle);
-			L_AssaultRifle_I.gameObject.transform.position = LeftWeapon_Spawn.transform.position;
+			Debug.Log ("L Weapon Spawned");
+			L_AssaultRifle_I.transform.position = LeftWeapon_Spawn.transform.position;
+			Debug.Log ("L Weapon positon Changed");
 			L_AssaultRifle_I.transform.parent = transform;
 			break;
 
 		case 2:
 			GameObject L_SniperRifle_I = Instantiate (L_Sniper_Rifle);
-			L_SniperRifle_I.gameObject.transform.position = LeftWeapon_Spawn.transform.position;
+			Debug.Log ("L Weapon Spawned");
+			L_SniperRifle_I.transform.position = LeftWeapon_Spawn.transform.position;
+			Debug.Log ("L Weapon positon Changed");
 			L_SniperRifle_I.transform.parent = transform;
 			break;
 
@@ -167,19 +180,25 @@ public class FrameController : MonoBehaviour {
 
 		case 0:
 			GameObject R_SMG_I = Instantiate (R_SMG);
-			R_SMG_I.gameObject.transform.position = RightWeapon_Spawn.transform.position;
+			Debug.Log ("R Weapon Spawned");
+			R_SMG_I.gameObject.transform.position = RightWeapon_Spawn.gameObject.transform.position;
+			Debug.Log ("R Weapon positon Changed");
 			R_SMG_I.transform.parent = transform;
 			break;
 
 		case 1:
 			GameObject R_AssaultRifle_I = Instantiate (R_Assault_Rifle);
-			R_AssaultRifle_I.gameObject.transform.position = RightWeapon_Spawn.transform.position;
+			Debug.Log ("R Weapon Spawned");
+			R_AssaultRifle_I.gameObject.transform.position = RightWeapon_Spawn.gameObject.transform.position;
+			Debug.Log ("R Weapon positon Changed");
 			R_AssaultRifle_I.transform.parent = transform;
 			break;
 
 		case 2:
 			GameObject R_SniperRifle_I = Instantiate (R_Sniper_Rifle);
-			R_SniperRifle_I.gameObject.transform.position = RightWeapon_Spawn.transform.position;
+			Debug.Log ("R Weapon Spawned");
+			R_SniperRifle_I.gameObject.transform.position = RightWeapon_Spawn.gameObject.transform.position;
+			Debug.Log ("R Weapon positon Changed");
 			R_SniperRifle_I.transform.parent = transform;
 			break;
 
