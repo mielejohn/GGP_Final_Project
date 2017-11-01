@@ -1,6 +1,9 @@
 # GGP_Final_Project
 ## Mechanized Assault
 
+## Check branches for member work
+
+
 ### Listed Below are the steps for adding to the GitHub repository
 
 I would like to first state if you aren't using TortoiseSVN, use it, you can download it, [here](https://tortoisesvn.net/downloads.html) . Once that is done, if I, John Miele, do not have you aa a contributor please contact me with your GitHub username and I will add you. Once you accept the invitation to collaborate follow these steps.
@@ -26,4 +29,3 @@ To start if someone needs to give you a file to modify DO NOT modify the file in
 
 ## If any error occur while commiting or updating please let me know
 ## If these are any questions please feel free to ask
-## Check branches for member work
