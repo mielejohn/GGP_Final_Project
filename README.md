@@ -26,3 +26,4 @@ To start if someone needs to give you a file to modify DO NOT modify the file in
 
 ## If any error occur while commiting or updating please let me know
 ## If these are any questions please feel free to ask
+## Check branches for member work
