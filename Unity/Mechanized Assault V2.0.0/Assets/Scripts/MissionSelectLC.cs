@@ -38,7 +38,7 @@ public class MissionSelectLC : MonoBehaviour {
 
 	public void MissionOneHover(){
 		MissionImage.gameObject.SetActive (true);
-		MissionInfo.text = "This is mission one and will be an introductory mission to the main storyline";
+		MissionInfo.text = "This is mission one and will be an introductory mission to the controls";
 	}
 
 	public void MissionOneUnHover(){

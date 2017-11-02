@@ -64,6 +64,9 @@
      <Compile Include="Assets\Scripts\WeaponScripts\R_Assault_Rifle.cs" />
      <Compile Include="Assets\Scripts\WeaponScripts\R_Sniper_Rifle.cs" />
      <Compile Include="Assets\Scripts\WeaponScripts\R_Sub_Machinegun.cs" />
+     <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
+     <None Include="Assets\XInputDotNet\Docs.txt" />
+     <None Include="Assets\XInputDotNet\MITLicense.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -84,6 +87,9 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="XInputDotNetPure">
+ <HintPath>G:/Final_Project_Repo_Master/branches/John's-Branch/Unity/Mechanized Assault V2.0.0/Assets/XInputDotNet/Plugins/XInputDotNetPure.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using XInputDotNetPure;
 
 public class FrameController : MonoBehaviour {
 
@@ -8,12 +10,16 @@ public class FrameController : MonoBehaviour {
 	public GameObject PlayerCamera;
 	private float MouseSensitivity = 175.0f;
 	private float CameraLimitSensitivity = 2.0f;
-	[SerializeField] public float CameraRotationLimit = 0f;
+	[SerializeField] public float CameraRotationLimitX = 0f;
+	[SerializeField] public float CameraRotationLimitY = 0f;
 
 	//Speed and movement
-	[SerializeField]public float Gspeed = 4500;
+	[SerializeField]private float Gspeed = 4500.0f;
+	[SerializeField]private float Jspeed = 80.0f;
 	public Rigidbody RB;
 	float tempY = 0f;
+	private float moveX;
+	private float moveZ;
 
 	//Spawns
 	public GameObject LeftWeapon_Spawn;
@@ -36,10 +42,17 @@ public class FrameController : MonoBehaviour {
 	public GameObject enemy;
 	public GameObject TestSpawn;
 
+	//Controller input
+	bool playerIndexSet = false;
+	PlayerIndex playerIndex;
+	GamePadState state;
+	GamePadState prevState;
+
+
 	void Start () {
 		LeftWeapon_Spawn = GameObject.FindGameObjectWithTag ("LWS");
 		RightWeapon_Spawn = GameObject.FindGameObjectWithTag ("RWS");
-		enemy = GameObject.FindGameObjectWithTag ("Enemy");
+		//enemy = GameObject.FindGameObjectWithTag ("Enemy");
 		TestSpawn = GameObject.FindGameObjectWithTag ("TestSpawn");
 		SpawnLeftWeapon ();
 		SpawnRightWeapon ();
@@ -47,12 +60,57 @@ public class FrameController : MonoBehaviour {
 
 	void Update () {
 
+		if (!playerIndexSet || !prevState.IsConnected)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+				PlayerIndex testPlayerIndex = (PlayerIndex)i;
+				GamePadState testState = GamePad.GetState(testPlayerIndex);
+				if (testState.IsConnected)
+				{
+					Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
+					playerIndex = testPlayerIndex;
+					playerIndexSet = true;
+				}
+			}
+		}
+
+		prevState = state;
+		state = GamePad.GetState(playerIndex);
+
 		OnGroundCheck ();
 
 		float moveX = Input.GetAxis ("Horizontal") * Gspeed * Time.deltaTime;
+		moveX = state.ThumbSticks.Left.X * Gspeed * Time.deltaTime;
 		float moveZ = Input.GetAxis ("Vertical") * Gspeed * Time.deltaTime;
-		float moveY = Input.GetAxis ("Flight") * Gspeed * Time.deltaTime;
+		moveZ = state.ThumbSticks.Left.Y * Gspeed * Time.deltaTime;
+		//float moveY = Input.GetAxis ("Flight") * Jspeed * Time.deltaTime;
+		//moveY = state.Triggers.Left* Jspeed * Time.deltaTime;
 		//float boost = Input.GetAxis ("Jump") * Gspeed + 2000 * Time.deltaTime;
+
+		if (Input.GetAxis ("Horizontal") > 0) {
+			Debug.Log ("HOrizontal is greater than 0");
+			if (PlayerCamera.transform.localPosition.x < 400) {
+				PlayerCamera.transform.Translate (Vector3.right * Time.deltaTime * 5);
+			}
+		}
+
+		if (Input.GetAxis("Horizontal") < 0) {
+			Debug.Log ("HOrizontal is Less than 0");
+			if (PlayerCamera.transform.localPosition.x > -400) {
+				PlayerCamera.transform.Translate (Vector3.left * Time.deltaTime * 5);
+			}
+		}
+
+		if (Input.GetAxis ("Flight") > 0 || state.Triggers.Left > 0) {
+			if (PlayerCamera.transform.localPosition.y > 100) {
+				PlayerCamera.transform.Translate (Vector3.down * Time.deltaTime * 5);
+			}
+		} else {
+			if (PlayerCamera.transform.localPosition.y < 568) {
+				PlayerCamera.transform.Translate (Vector3.up * Time.deltaTime * 5);
+			}
+		}
 
 		if (Input.GetButton ("Horizontal") || Input.GetButton ("Vertical")) {
 			Debug.Log ("Bout to call input");
@@ -60,28 +118,46 @@ public class FrameController : MonoBehaviour {
 			Debug.Log ("Just called input");
 		}
 
-		if (Input.GetButton ("Flight")) {
-			Fly (moveY);
+		if (state.ThumbSticks.Left.X > 0 || state.ThumbSticks.Left.Y > 0 || state.ThumbSticks.Left.X < 0 || state.ThumbSticks.Left.Y < 0) {
+			Debug.Log ("Bout to call input");
+			Move(moveX, moveZ);
+			Debug.Log ("Just called input");
 		}
 
-		if (Input.GetButtonDown ("Jump")) {
+		if (Input.GetButton ("Flight") || state.Triggers.Left > 0) {
+			//RB.velocity *= RB.velocity.y * Time.deltaTime;
+			RB.velocity = new Vector3 (0, 25, 0);
+			//Fly (moveY);
+		} else {
+			RB.velocity = new Vector3 (0, -25, 0);
+		}
+
+		if (Input.GetButtonDown ("Jump") || state.Triggers.Right > 0) {
 			StartCoroutine(Boost ());
 		}
-		CameraRotationLimit -= Input.GetAxis ("Mouse Y") * CameraLimitSensitivity;
-		CameraRotationLimit = Mathf.Clamp (CameraRotationLimit, -10, 17);
+		CameraRotationLimitX -= Input.GetAxis ("Mouse Y") * CameraLimitSensitivity;
+		CameraRotationLimitX -= state.ThumbSticks.Right.Y * CameraLimitSensitivity;
+		CameraRotationLimitX = Mathf.Clamp (CameraRotationLimitX, -10, 10);
 
-		this.gameObject.transform.rotation *= Quaternion.Euler (0.0f, Input.GetAxis ("Mouse X") * Time.deltaTime * MouseSensitivity, 0.0f);
-		PlayerCamera.gameObject.transform.localEulerAngles = new Vector3 (CameraRotationLimit, 0.0f, 0.0f);
+		//CameraRotationLimitY -= Input.GetAxis ("Mouse X") * CameraLimitSensitivity;
+		//CameraRotationLimitY = Mathf.Clamp (CameraRotationLimitY, -10, 15);
 
-		if (Input.GetButtonDown ("LockOn")) {
+		this.gameObject.transform.rotation *= Quaternion.Euler (0.0f, Input.GetAxis ("Mouse X") * Time.deltaTime * MouseSensitivity, 0.0f);// Player Rotation
+		this.gameObject.transform.rotation *= Quaternion.Euler (0.0f, state.ThumbSticks.Right.X * Time.deltaTime * MouseSensitivity, 0.0f);
+		PlayerCamera.gameObject.transform.localEulerAngles = new Vector3 (CameraRotationLimitX, 0.0f, 0.0f); // Camera Rotation
+
+		//RB.MoveRotation (transform.rotation * Time.deltaTime);
+
+		if (Input.GetButtonDown ("LockOn") || prevState.Buttons.RightStick == ButtonState.Pressed && state.Buttons.RightStick == ButtonState.Released) {
 			tempY = transform.rotation.eulerAngles.y;
-			Debug.Log("the y rotation is" + tempY);
+			//Debug.Log("the y rotation is" + tempY);
 			RaycastHit hit = new RaycastHit();
 			//Physics.Raycast (transform.position, transform.forward, out hit);
 			//Vector3 fwd = transform.TransformDirection(Vector3.forward);
 			//if(Physics.Raycast(transform.forward, fwd, 500)){
 			if (Physics.Raycast (transform.position, transform.forward, out hit) && LockedOn == false) {
 				if (hit.collider.gameObject.tag == "Enemy") {
+					enemy = hit.collider.gameObject;
 					Debug.Log ("I hit the enemy, I think...");
 					//this.transform.localRotation.y = enemy.transform.position;
 					//transform.rotation *= Quaternion.LookRotation(enemy.transform.position - transform.position, Vector3.up);
@@ -96,18 +172,19 @@ public class FrameController : MonoBehaviour {
 
 		if (LockedOn == true) {
 			Debug.Log ("LockOn is true");
-			transform.rotation = Quaternion.LookRotation(enemy.transform.position - transform.position, Vector3.up);
+			transform.rotation = Quaternion.LookRotation (enemy.transform.position - transform.position, Vector3.up);
 		}
 	}
 
 	void Move(float movex, float movez){
-		//Vector3 movement = new Vector3 (movex, 0.0f, movez);
 		transform.position += transform.forward * Time.deltaTime * movez;
 		transform.position += transform.right * Time.deltaTime * movex;
 	}
 
 	void Fly(float movey){
-		transform.position += transform.up * Time.deltaTime * movey;
+		transform.Translate (Vector3.up * Time.deltaTime * Jspeed); 
+		//transform.position += transform.up * Time.deltaTime * movey;
+		//RB.AddForce(Vector3.up * Time.deltaTime * Jspeed);
 	}
 
 	void OnGroundCheck(){

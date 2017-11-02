@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PracticeArenaLC : MonoBehaviour {
 
@@ -57,6 +58,14 @@ public class PracticeArenaLC : MonoBehaviour {
 			BoostText.text = "No";
 		} else {
 			BoostText.text = "Yes";
+		}
+
+		if (Input.GetKey (KeyCode.P) && Input.GetKey (KeyCode.LeftAlt)) {
+			SceneManager.LoadScene ("PracticeArenaScene", LoadSceneMode.Single);
+		}
+
+		if (Input.GetKey (KeyCode.O) && Input.GetKey (KeyCode.LeftAlt)) {
+			SceneManager.LoadScene ("TitleScreen", LoadSceneMode.Single);
 		}
 	}
 
