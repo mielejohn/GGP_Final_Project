@@ -14,8 +14,9 @@ public class FrameController : MonoBehaviour {
 	[SerializeField] public float CameraRotationLimitY = 0f;
 
 	//Speed and movement
-	[SerializeField]private float Gspeed = 4500.0f;
-	[SerializeField]private float Jspeed = 80.0f;
+	[SerializeField]private float Gspeed;
+	[SerializeField]private float Jspeed;
+	[SerializeField]private float DashBuffer;
 	public Rigidbody RB;
 	float tempY = 0f;
 	private float moveX;
@@ -42,6 +43,7 @@ public class FrameController : MonoBehaviour {
 	public GameObject enemy;
 	public GameObject TestSpawn;
 
+
 	//Controller input
 	bool playerIndexSet = false;
 	PlayerIndex playerIndex;
@@ -50,6 +52,30 @@ public class FrameController : MonoBehaviour {
 
 
 	void Start () {
+
+		switch(PlayerPrefs.GetInt("FrameChoice")){
+		case 0:
+			Gspeed = 5500;
+			Jspeed = 90.0f;
+			DashBuffer = 0.4f;
+			break;
+
+		case 1:
+			Gspeed = 4500;
+			Jspeed = 82.0f;
+			DashBuffer = 0.6f;
+			break;
+
+		case 2:
+			Gspeed = 4000;
+			Jspeed = 75.0f;
+			DashBuffer = 0.9f;
+			break;
+
+
+		}
+
+
 		LeftWeapon_Spawn = GameObject.FindGameObjectWithTag ("LWS");
 		RightWeapon_Spawn = GameObject.FindGameObjectWithTag ("RWS");
 		//enemy = GameObject.FindGameObjectWithTag ("Enemy");
@@ -59,6 +85,8 @@ public class FrameController : MonoBehaviour {
 	}
 
 	void Update () {
+
+		//ControlleSync---------------------------------------------------------------------------------------------------------------------------
 
 		if (!playerIndexSet || !prevState.IsConnected)
 		{
@@ -80,13 +108,30 @@ public class FrameController : MonoBehaviour {
 
 		OnGroundCheck ();
 
-		float moveX = Input.GetAxis ("Horizontal") * Gspeed * Time.deltaTime;
-		moveX = state.ThumbSticks.Left.X * Gspeed * Time.deltaTime;
-		float moveZ = Input.GetAxis ("Vertical") * Gspeed * Time.deltaTime;
-		moveZ = state.ThumbSticks.Left.Y * Gspeed * Time.deltaTime;
-		//float moveY = Input.GetAxis ("Flight") * Jspeed * Time.deltaTime;
-		//moveY = state.Triggers.Left* Jspeed * Time.deltaTime;
-		//float boost = Input.GetAxis ("Jump") * Gspeed + 2000 * Time.deltaTime;
+
+		//Movement---------------------------------------------------------------------------------------------------------------------------------
+
+		if (Input.GetButton ("Horizontal") || Input.GetButton ("Vertical")) {
+			moveX = Input.GetAxis ("Horizontal") * Gspeed * Time.deltaTime;
+			moveZ = Input.GetAxis ("Vertical") * Gspeed * Time.deltaTime;
+			Debug.Log ("Bout to call Keyboard input");
+			Move(moveX, moveZ);
+			Debug.Log ("Just called Keyboard input");
+		}
+
+		if (state.ThumbSticks.Left.X > 0 || state.ThumbSticks.Left.Y > 0 || state.ThumbSticks.Left.X < 0 || state.ThumbSticks.Left.Y < 0) {
+			moveX = state.ThumbSticks.Left.X * Gspeed * Time.deltaTime;
+			moveZ = state.ThumbSticks.Left.Y * Gspeed * Time.deltaTime;
+			Debug.Log ("Bout to call Controller input");
+			Move(moveX, moveZ);
+			Debug.Log ("Just called Controller input");
+		}
+
+		if (Input.GetButton ("Flight") || state.Triggers.Left > 0) {
+			RB.velocity = new Vector3 (0, 25, 0);
+		} else {
+			RB.velocity = new Vector3 (0, -25, 0);
+		}
 
 		if (Input.GetAxis ("Horizontal") > 0) {
 			Debug.Log ("HOrizontal is greater than 0");
@@ -112,25 +157,8 @@ public class FrameController : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetButton ("Horizontal") || Input.GetButton ("Vertical")) {
-			Debug.Log ("Bout to call input");
-			Move(moveX, moveZ);
-			Debug.Log ("Just called input");
-		}
 
-		if (state.ThumbSticks.Left.X > 0 || state.ThumbSticks.Left.Y > 0 || state.ThumbSticks.Left.X < 0 || state.ThumbSticks.Left.Y < 0) {
-			Debug.Log ("Bout to call input");
-			Move(moveX, moveZ);
-			Debug.Log ("Just called input");
-		}
-
-		if (Input.GetButton ("Flight") || state.Triggers.Left > 0) {
-			//RB.velocity *= RB.velocity.y * Time.deltaTime;
-			RB.velocity = new Vector3 (0, 25, 0);
-			//Fly (moveY);
-		} else {
-			RB.velocity = new Vector3 (0, -25, 0);
-		}
+		//Lockon----------------------------------------------------------------------------------------------------------------------------------
 
 		if (Input.GetButtonDown ("Jump") || state.Triggers.Right > 0) {
 			StartCoroutine(Boost ());
@@ -141,10 +169,11 @@ public class FrameController : MonoBehaviour {
 
 		//CameraRotationLimitY -= Input.GetAxis ("Mouse X") * CameraLimitSensitivity;
 		//CameraRotationLimitY = Mathf.Clamp (CameraRotationLimitY, -10, 15);
-
-		this.gameObject.transform.rotation *= Quaternion.Euler (0.0f, Input.GetAxis ("Mouse X") * Time.deltaTime * MouseSensitivity, 0.0f);// Player Rotation
-		this.gameObject.transform.rotation *= Quaternion.Euler (0.0f, state.ThumbSticks.Right.X * Time.deltaTime * MouseSensitivity, 0.0f);
-		PlayerCamera.gameObject.transform.localEulerAngles = new Vector3 (CameraRotationLimitX, 0.0f, 0.0f); // Camera Rotation
+		if (LockedOn == false) {
+			this.gameObject.transform.rotation *= Quaternion.Euler (0.0f, Input.GetAxis ("Mouse X") * Time.deltaTime * MouseSensitivity, 0.0f);// Player Rotation
+			this.gameObject.transform.rotation *= Quaternion.Euler (0.0f, state.ThumbSticks.Right.X * Time.deltaTime * MouseSensitivity, 0.0f);
+			PlayerCamera.gameObject.transform.localEulerAngles = new Vector3 (CameraRotationLimitX, 0.0f, 0.0f); // Camera Rotation
+		}
 
 		//RB.MoveRotation (transform.rotation * Time.deltaTime);
 
@@ -177,6 +206,7 @@ public class FrameController : MonoBehaviour {
 	}
 
 	void Move(float movex, float movez){
+		Debug.Log ("Calling move X and Z");
 		transform.position += transform.forward * Time.deltaTime * movez;
 		transform.position += transform.right * Time.deltaTime * movex;
 	}
@@ -201,10 +231,11 @@ public class FrameController : MonoBehaviour {
 
 	public IEnumerator Boost(){
 		if (canBoost == true) {
+			float BoostSpeed = Gspeed * 2;
 			canBoost = false;
-			Gspeed += 9000;
+			Gspeed += BoostSpeed;
 			yield return new WaitForSeconds (0.5f);
-			Gspeed -= 9000;
+			Gspeed -= BoostSpeed;
 			StartCoroutine (BoostBuffer ());
 		}
 
@@ -218,7 +249,7 @@ public class FrameController : MonoBehaviour {
 	}
 
 	public IEnumerator BoostBuffer(){
-		yield return new WaitForSeconds (0.70f);
+		yield return new WaitForSeconds (DashBuffer);
 		canBoost = true;
 	}
 

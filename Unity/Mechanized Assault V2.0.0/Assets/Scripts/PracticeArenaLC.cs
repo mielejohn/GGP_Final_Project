@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using XInputDotNetPure;
+
 
 public class PracticeArenaLC : MonoBehaviour {
 
@@ -21,6 +23,15 @@ public class PracticeArenaLC : MonoBehaviour {
 
 	public GameObject chosenPlayerFrame;
 
+
+	[SerializeField] private bool Pasued = false;
+
+	//Controller input
+	bool playerIndexSet = false;
+	PlayerIndex playerIndex;
+	GamePadState state;
+	GamePadState prevState;
+
 	/*
 	//LeftWeapons
 	public GameObject L_Assault_Rifle;
@@ -34,15 +45,11 @@ public class PracticeArenaLC : MonoBehaviour {
 	*/
 	//ShoulderWeapons
 
-
-
 	//HelperText
 	public Text BoostText; 
-	
+
 	void Start () {
-
-
-
+		
 		SpawnFrame ();
 		FC = GameObject.FindGameObjectWithTag ("Player").GetComponent<FrameController>();
 		//LeftWeapon_Spawn = GameObject.FindGameObjectWithTag ("LWS");
@@ -54,6 +61,25 @@ public class PracticeArenaLC : MonoBehaviour {
 	
 
 	void Update () {
+
+		if (!playerIndexSet || !prevState.IsConnected)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+				PlayerIndex testPlayerIndex = (PlayerIndex)i;
+				GamePadState testState = GamePad.GetState(testPlayerIndex);
+				if (testState.IsConnected)
+				{
+					Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
+					playerIndex = testPlayerIndex;
+					playerIndexSet = true;
+				}
+			}
+		}
+
+		prevState = state;
+		state = GamePad.GetState(playerIndex);
+
 		if (FC.canBoost == false) {
 			BoostText.text = "No";
 		} else {
@@ -67,6 +93,16 @@ public class PracticeArenaLC : MonoBehaviour {
 		if (Input.GetKey (KeyCode.O) && Input.GetKey (KeyCode.LeftAlt)) {
 			SceneManager.LoadScene ("TitleScreen", LoadSceneMode.Single);
 		}
+
+		if (prevState.Buttons.Start == ButtonState.Released && state.Buttons.Start == ButtonState.Pressed && Pasued == false) {
+			Pasued = true;
+			Time.timeScale = 0.0f;
+
+		} else if (prevState.Buttons.Start == ButtonState.Released && state.Buttons.Start == ButtonState.Pressed && Pasued == true) {
+			Pasued = false;
+			Time.timeScale = 1.0f;
+		} 
+
 	}
 
 	public void SpawnFrame(){
@@ -92,52 +128,4 @@ public class PracticeArenaLC : MonoBehaviour {
 
 		}
 	}
-
-	/*public void SpawnLeftWeapon(){
-		switch(PlayerPrefs.GetInt("LeftWeaponChoice")){
-
-		case 0:
-			GameObject L_SMG_I = Instantiate (L_SMG);
-			L_SMG_I.gameObject.transform.position = LeftWeapon_Spawn.transform.position;
-			L_SMG_I.transform.parent = chosenPlayerFrame.transform;
-			break;
-
-		case 1:
-			GameObject L_AssaultRifle_I = Instantiate (L_Assault_Rifle);
-			L_AssaultRifle_I.gameObject.transform.position = LeftWeapon_Spawn.transform.position;
-			L_AssaultRifle_I.transform.parent = chosenPlayerFrame.transform;
-			break;
-
-		case 2:
-			GameObject L_SniperRifle_I = Instantiate (L_Sniper_Rifle);
-			L_SniperRifle_I.gameObject.transform.position = LeftWeapon_Spawn.transform.position;
-			L_SniperRifle_I.transform.parent = chosenPlayerFrame.transform;
-			break;
-
-		}
-	}
-
-	public void SpawnRightWeapon(){
-		switch(PlayerPrefs.GetInt("RightWeaponChoice")){
-
-		case 0:
-			GameObject R_SMG_I = Instantiate (R_SMG);
-			R_SMG_I.gameObject.transform.position = RightWeapon_Spawn.transform.position;
-			R_SMG_I.transform.parent = chosenPlayerFrame.transform;
-			break;
-
-		case 1:
-			GameObject R_AssaultRifle_I = Instantiate (R_Assault_Rifle);
-			R_AssaultRifle_I.gameObject.transform.position = RightWeapon_Spawn.transform.position;
-			R_AssaultRifle_I.transform.parent = chosenPlayerFrame.transform;
-			break;
-
-		case 2:
-			GameObject R_SniperRifle_I = Instantiate (R_Sniper_Rifle);
-			R_SniperRifle_I.gameObject.transform.position = RightWeapon_Spawn.transform.position;
-			R_SniperRifle_I.transform.parent = chosenPlayerFrame.transform;
-			break;
-
-		}
-	}*/
 }

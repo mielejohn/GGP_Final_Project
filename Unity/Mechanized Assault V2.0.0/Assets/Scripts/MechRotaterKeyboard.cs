@@ -7,12 +7,14 @@ public class MechRotaterKeyboard : MonoBehaviour {
 	public bool isRotating;
 	public float rotation;
 
+
 	void Start () {
 		rotation = 45f;
 	}
 	
 
 	void Update () {
+
 		if (Input.GetKey("d")) {
 			On_D_down ();
 		}

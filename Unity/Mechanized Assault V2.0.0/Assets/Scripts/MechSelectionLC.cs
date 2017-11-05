@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using XInputDotNetPure;
 
 public class MechSelectionLC : MonoBehaviour {
 
@@ -49,6 +50,9 @@ public class MechSelectionLC : MonoBehaviour {
 
 	//WEAPONS
 	//------------------------------------------------------------------
+
+	public GameObject rightSelectorImage;
+	public GameObject leftSelectorImage;
 
 	public GameObject L_SMG;
 	public GameObject L_Assault_Rifle;
@@ -99,6 +103,18 @@ public class MechSelectionLC : MonoBehaviour {
 
 	public string MenuType = "Mech";
 
+	//Controller input
+	bool playerIndexSet = false;
+	PlayerIndex playerIndex;
+	GamePadState state;
+	GamePadState prevState;
+	public int ControllerSelection;
+
+	//Screen Change
+	public Slider loadingBar;
+	public GameObject loadingImage;
+	private AsyncOperation async;
+
 	void Awake(){
 		if (PlayerPrefs.HasKey ("FrameChoice")) {
 			DeletePlayerValues ();
@@ -116,6 +132,79 @@ public class MechSelectionLC : MonoBehaviour {
 	}
 
 	void Update () {
+
+		if (!playerIndexSet || !prevState.IsConnected)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+				PlayerIndex testPlayerIndex = (PlayerIndex)i;
+				GamePadState testState = GamePad.GetState(testPlayerIndex);
+				if (testState.IsConnected)
+				{
+					Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
+					playerIndex = testPlayerIndex;
+					playerIndexSet = true;
+				}
+			}
+		}
+
+		prevState = state;
+		state = GamePad.GetState(playerIndex);
+
+		if (prevState.Buttons.RightShoulder == ButtonState.Pressed && state.Buttons.RightShoulder == ButtonState.Released) {
+			Debug.Log ("Right Shoulder Pressed");
+			if (ControllerSelection == 0) {
+				NextFrame ();
+			} else if(ControllerSelection == 1){
+				RNextWeapon (); 				
+			} else if(ControllerSelection == 2){
+				LNextWeapon ();
+			}
+
+		}
+
+		if (prevState.Buttons.LeftShoulder == ButtonState.Pressed && state.Buttons.LeftShoulder == ButtonState.Released) {
+			Debug.Log ("Left Shoulder Pressed");
+			if(ControllerSelection == 0){
+				PreviousFrame ();
+			}else if(ControllerSelection == 1){
+				RPreviousWeapon ();
+			} else if(ControllerSelection == 2){
+				LPreviousWeapon (); 				
+			}
+		}
+
+		if (prevState.Buttons.A == ButtonState.Pressed && state.Buttons.A == ButtonState.Released) {
+			Debug.Log ("'A' Pressed");
+			if (ControllerSelection == 0) {
+				ContinueButton ();
+				ControllerSelection++;
+				rightSelectorImage.gameObject.SetActive (true);
+			}else if(ControllerSelection == 1){
+				rightSelectorImage.gameObject.SetActive (false);
+				leftSelectorImage.gameObject.SetActive (true);
+				ControllerSelection++;
+			}else if(ControllerSelection == 2){
+				ContinueButton ();
+			}
+		}
+
+		if (prevState.Buttons.B == ButtonState.Pressed && state.Buttons.B == ButtonState.Released) {
+			Debug.Log ("'B' Pressed");
+			if (ControllerSelection == 0) {
+				BackButton ();
+			}else if(ControllerSelection == 1){
+				rightSelectorImage.gameObject.SetActive (false);
+				ControllerSelection--;
+				BackButton ();
+			}else if(ControllerSelection == 2){
+				rightSelectorImage.gameObject.SetActive (true);
+				leftSelectorImage.gameObject.SetActive (false);
+				ControllerSelection--;
+			}
+		}
+
+
 		ArmorNumberText.text = "" + Armor;
 		WeightNumberText.text = "" + Weight;
 		SpeedNumberText.text = "" + Speed;
@@ -534,9 +623,24 @@ public class MechSelectionLC : MonoBehaviour {
 			MenuType = "Weapons";
 		} else {
 			StorePayerValues ();
-			SceneManager.LoadScene ("PracticeArenaScene",LoadSceneMode.Single);
+			Debug.Log ("Mission select player prefs is" + PlayerPrefs.GetInt("MissionSelect"));
+			LoadAsync(PlayerPrefs.GetInt("MissionSelect"));
 		}
 	}
+
+	public void LoadAsync(int Levelnumber){
+		loadingImage.SetActive (true);
+		StartCoroutine (LoadLevelWithBar (Levelnumber));
+	}
+
+	IEnumerator LoadLevelWithBar(int LevelNumber){
+		async = SceneManager.LoadSceneAsync (LevelNumber);
+		while (!async.isDone) {
+			loadingBar.value = async.progress;
+			yield return null;
+		}
+	}
+
 
 	public void hoverTest(){
 		Debug.Log ("HoverTest seucessful");

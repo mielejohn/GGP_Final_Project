@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using XInputDotNetPure;
 
 public class MainMenuLC : MonoBehaviour {
 
@@ -63,6 +64,12 @@ public class MainMenuLC : MonoBehaviour {
 	public GameObject ScreenFader;
 	public bool Selected;
 
+	//Controller input
+	bool playerIndexSet = false;
+	PlayerIndex playerIndex;
+	GamePadState state;
+	GamePadState prevState;
+
 	void awake(){
 
 	}
@@ -80,6 +87,28 @@ public class MainMenuLC : MonoBehaviour {
 		MasterVolume.text = "" + MasterVolumeSlider.value;
 		MusicVolume.text = "" + MusicVolumeSlider.value;
 
+		if (!playerIndexSet || !prevState.IsConnected)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+				PlayerIndex testPlayerIndex = (PlayerIndex)i;
+				GamePadState testState = GamePad.GetState(testPlayerIndex);
+				if (testState.IsConnected)
+				{
+					Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
+					playerIndex = testPlayerIndex;
+					playerIndexSet = true;
+				}
+			}
+		}
+
+		prevState = state;
+		state = GamePad.GetState(playerIndex);
+
+		if (prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed){
+			Debug.Log ("A button pressed");
+			MissionSelectbutton ();
+		}
 	}
 
 
