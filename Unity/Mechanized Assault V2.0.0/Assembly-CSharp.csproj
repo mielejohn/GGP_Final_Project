@@ -51,7 +51,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Enemies\BasicEnemyScript.cs" />
+     <Compile Include="Assets\Scripts\Enemies\EnemyStatsCanvas.cs" />
+     <Compile Include="Assets\Scripts\Enemies\GruntEnemy\BasicEnemyScript.cs" />
+     <Compile Include="Assets\Scripts\Enemies\GruntEnemy\BasicenemyStates.cs" />
+     <Compile Include="Assets\Scripts\Enemies\GruntEnemy\Enemy.cs" />
+     <Compile Include="Assets\Scripts\Enemies\GruntEnemy\EnemyAiStates.cs" />
+     <Compile Include="Assets\Scripts\Enemies\GruntEnemy\NavEnemy.cs" />
      <Compile Include="Assets\Scripts\FrameController.cs" />
      <Compile Include="Assets\Scripts\MainMenuLC.cs" />
      <Compile Include="Assets\Scripts\MechRotaterKeyboard.cs" />

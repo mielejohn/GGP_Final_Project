@@ -47,6 +47,10 @@ public class PracticeArenaLC : MonoBehaviour {
 
 	//HelperText
 	public Text BoostText; 
+	public bool ControlsUp = false;
+	public GameObject ControlsObject;
+	public GameObject ControllerHelper;
+	public GameObject KeyboardHelper;
 
 	void Start () {
 		
@@ -103,6 +107,19 @@ public class PracticeArenaLC : MonoBehaviour {
 			Time.timeScale = 1.0f;
 		} 
 
+		if (Input.GetKeyDown (KeyCode.C) && ControlsUp == false) {
+			Time.timeScale = 0.0f;
+			ControlsObject.gameObject.SetActive (true);
+			KeyboardHelper.SetActive (true);
+			ControllerHelper.SetActive (false);
+			ControlsUp = true;
+		} else if (Input.GetKeyDown (KeyCode.C) && ControlsUp == true) {
+			Time.timeScale = 1.0f;
+			ControlsObject.SetActive (false);
+			KeyboardHelper.SetActive (true);
+			ControllerHelper.SetActive (false);
+			ControlsUp = false;
+		}
 	}
 
 	public void SpawnFrame(){
@@ -127,5 +144,15 @@ public class PracticeArenaLC : MonoBehaviour {
 			break;
 
 		}
+	}
+
+	public void ControllerControls(){
+		ControllerHelper.SetActive (true);
+		KeyboardHelper.SetActive (false);
+	}
+
+	public void KeyBoardControls(){
+		KeyboardHelper.SetActive (true);
+		ControllerHelper.SetActive (false);
 	}
 }

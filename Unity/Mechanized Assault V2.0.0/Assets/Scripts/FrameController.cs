@@ -22,6 +22,10 @@ public class FrameController : MonoBehaviour {
 	private float moveX;
 	private float moveZ;
 
+	//Stats
+	[SerializeField]private int BaseHealth;
+	[SerializeField]private int Health;
+
 	//Spawns
 	public GameObject LeftWeapon_Spawn;
 	public GameObject RightWeapon_Spawn;
@@ -35,6 +39,9 @@ public class FrameController : MonoBehaviour {
 	public GameObject R_Assault_Rifle;
 	public GameObject R_SMG;
 	public GameObject R_Sniper_Rifle;
+
+	//Resource Crates
+	[SerializeField]private int RepairBoxStock = 0;
 
 	// MISC.
 	public bool LockedOn = false;
@@ -55,21 +62,30 @@ public class FrameController : MonoBehaviour {
 
 		switch(PlayerPrefs.GetInt("FrameChoice")){
 		case 0:
+			Debug.Log ("Chose DASH");
 			Gspeed = 5500;
 			Jspeed = 90.0f;
 			DashBuffer = 0.4f;
+			BaseHealth = 35000;
+			Health = 35000;
 			break;
 
 		case 1:
+			Debug.Log ("Chose Assault");
 			Gspeed = 4500;
 			Jspeed = 82.0f;
 			DashBuffer = 0.6f;
+			BaseHealth = 42500;
+			Health = 42500;
 			break;
 
 		case 2:
+			Debug.Log ("Chose Support");
 			Gspeed = 4000;
 			Jspeed = 75.0f;
 			DashBuffer = 0.9f;
+			BaseHealth = 50000;
+			Health = 50000;
 			break;
 
 
@@ -104,10 +120,7 @@ public class FrameController : MonoBehaviour {
 		}
 
 		prevState = state;
-		state = GamePad.GetState(playerIndex);
-
-		OnGroundCheck ();
-
+		state = GamePad.GetState (playerIndex);
 
 		//Movement---------------------------------------------------------------------------------------------------------------------------------
 
@@ -203,6 +216,31 @@ public class FrameController : MonoBehaviour {
 			Debug.Log ("LockOn is true");
 			transform.rotation = Quaternion.LookRotation (enemy.transform.position - transform.position, Vector3.up);
 		}
+
+		if (prevState.DPad.Up == ButtonState.Released && state.DPad.Up == ButtonState.Pressed && RepairBoxStock > 0) {
+			if (Health + 5000 > BaseHealth) {
+				Debug.Log ("Health + 5000 is greater than " + BaseHealth);
+			
+				Health = BaseHealth;
+				RepairBoxStock--;
+			} else {
+				Health = Health + 5000;
+				RepairBoxStock--;
+			}
+		}
+
+		if (Input.GetKeyDown(KeyCode.Alpha1) && RepairBoxStock > 0) {
+			if (Health + 5000 > BaseHealth) {
+				Debug.Log ("Health + 5000 is greater than " + BaseHealth);
+				int tempHealth = Health + 5000;
+				Health += tempHealth - BaseHealth ;
+				RepairBoxStock--;
+			} else {
+				Health = Health + 5000;
+				RepairBoxStock--;
+			}
+		}
+
 	}
 
 	void Move(float movex, float movez){
@@ -217,8 +255,11 @@ public class FrameController : MonoBehaviour {
 		//RB.AddForce(Vector3.up * Time.deltaTime * Jspeed);
 	}
 
-	void OnGroundCheck(){
-
+	void OnTriggerEnter(Collider other){
+		if (other.tag == "RepairCrate") {
+			RepairBoxStock++;
+			Destroy (other.gameObject);
+		}
 	}
 
 	void OnTriggerStay (Collider other){
