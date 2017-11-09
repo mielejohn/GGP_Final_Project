@@ -12,7 +12,7 @@ public class MechSelectionLC : MonoBehaviour {
 	public MechRotaterKeyboard MRK;
 	public GameObject AllMechItems;
 	public GameObject AllWeaponItems;
-
+	public Material MISCU_Frame_Color;
 	//Frames
 	public int Frame_Number = 0;
 	public Text Frame_Name;
@@ -263,6 +263,7 @@ public class MechSelectionLC : MonoBehaviour {
 			DASH_Frame.gameObject.SetActive (true);
 			chosenFrame = DASH_Frame;
 			Frame_Name.text = "Dash";
+			MISCU_Frame_Color.color = Color.blue;
 
 			//Variables
 			Armor = 35000;
@@ -280,6 +281,7 @@ public class MechSelectionLC : MonoBehaviour {
 			Assault_Frame.gameObject.SetActive (true);
 			chosenFrame = Assault_Frame;
 			Frame_Name.text = "Assault";
+			MISCU_Frame_Color.color = Color.red;
 
 			//Variables
 			Armor = 42500;
@@ -296,6 +298,7 @@ public class MechSelectionLC : MonoBehaviour {
 			Support_Frame.gameObject.SetActive (true);
 			chosenFrame = Support_Frame;
 			Frame_Name.text = "Support";
+			MISCU_Frame_Color.color = Color.green;
 
 			//Variables
 			Armor = 50000;

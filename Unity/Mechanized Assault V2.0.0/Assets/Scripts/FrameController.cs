@@ -6,6 +6,8 @@ using XInputDotNetPure;
 
 public class FrameController : MonoBehaviour {
 
+	public GameObject topObject;
+
 	//Camera
 	public GameObject PlayerCamera;
 	private float MouseSensitivity = 175.0f;
@@ -182,11 +184,11 @@ public class FrameController : MonoBehaviour {
 
 		//CameraRotationLimitY -= Input.GetAxis ("Mouse X") * CameraLimitSensitivity;
 		//CameraRotationLimitY = Mathf.Clamp (CameraRotationLimitY, -10, 15);
-		if (LockedOn == false) {
-			this.gameObject.transform.rotation *= Quaternion.Euler (0.0f, Input.GetAxis ("Mouse X") * Time.deltaTime * MouseSensitivity, 0.0f);// Player Rotation
-			this.gameObject.transform.rotation *= Quaternion.Euler (0.0f, state.ThumbSticks.Right.X * Time.deltaTime * MouseSensitivity, 0.0f);
+		//if (LockedOn == false) {
+			this.gameObject.transform.rotation *= Quaternion.Euler (topObject.transform.rotation.x, Input.GetAxis ("Mouse X") * Time.deltaTime * MouseSensitivity, topObject.transform.rotation.z);// Player Rotation
+			this.gameObject.transform.rotation *= Quaternion.Euler (topObject.transform.rotation.x, state.ThumbSticks.Right.X * Time.deltaTime * MouseSensitivity, topObject.transform.rotation.z);
 			PlayerCamera.gameObject.transform.localEulerAngles = new Vector3 (CameraRotationLimitX, 0.0f, 0.0f); // Camera Rotation
-		}
+		//}
 
 		//RB.MoveRotation (transform.rotation * Time.deltaTime);
 

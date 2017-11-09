@@ -69,7 +69,7 @@
      <Compile Include="Assets\Scripts\WeaponScripts\R_Assault_Rifle.cs" />
      <Compile Include="Assets\Scripts\WeaponScripts\R_Sniper_Rifle.cs" />
      <Compile Include="Assets\Scripts\WeaponScripts\R_Sub_Machinegun.cs" />
-     <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
+     <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS1.cs" />
      <None Include="Assets\XInputDotNet\Docs.txt" />
      <None Include="Assets\XInputDotNet\MITLicense.txt" />
  <Reference Include="UnityEngine.UI">

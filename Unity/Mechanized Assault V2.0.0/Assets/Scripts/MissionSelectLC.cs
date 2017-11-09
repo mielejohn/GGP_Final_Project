@@ -40,9 +40,13 @@ public class MissionSelectLC : MonoBehaviour {
 	public Slider loadingBar;
 	public GameObject loadingImage;
 	private AsyncOperation async;
+	public bool IntroEnded=false;
 
 	void Start () {
+		IntroEnded = false;
+		Debug.Log ("Start of mission select");
 		StartCoroutine (GameStartAnim ());
+		ControllerSelect ();
 	}
 
 	void Update () {
@@ -64,7 +68,7 @@ public class MissionSelectLC : MonoBehaviour {
 		prevState = state;
 		state = GamePad.GetState(playerIndex);
 
-		if (prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed){
+		if (prevState.Buttons.A == ButtonState.Pressed && state.Buttons.A == ButtonState.Released && IntroEnded == true){
 			switch(ControllerSpot){
 
 			case 0:
@@ -93,6 +97,10 @@ public class MissionSelectLC : MonoBehaviour {
 		if (prevState.DPad.Up == ButtonState.Pressed && state.DPad.Up == ButtonState.Released && ControllerSpot > 0) {
 			ControllerSpot--;
 			ControllerSelect ();
+		}
+
+		if (prevState.Buttons.B == ButtonState.Released && state.Buttons.B == ButtonState.Pressed) {
+			MainMenuButton ();
 		}
 	}
 
@@ -184,25 +192,25 @@ public class MissionSelectLC : MonoBehaviour {
 		switch(ControllerSpot){
 
 		case 0:
-			MissionOneHover ();
 			MissionTwoUnHover ();
+			MissionOneHover ();
 			break;
 
 		case 1:
-			MissionTwoHover ();
 			MissionOneUnHover ();
 			MissionThreeUnHover ();
+			MissionTwoHover ();
 			break;
 
 		case 2:
-			MissionThreeHover ();
 			MissionTwoUnHover ();
 			MissionFourUnHover ();
+			MissionThreeHover ();
 			break;
 
 		case 3:
-			MissionFourHover ();
 			MissionThreeUnHover ();
+			MissionFourHover ();
 			break;
 		}
 	}
@@ -224,5 +232,6 @@ public class MissionSelectLC : MonoBehaviour {
 		ScreenFader.gameObject.GetComponent<Animator> ().Play ("Screen_Fade_In", -1, 0.0f);
 		yield return new WaitForSeconds (1.5f);
 		ScreenFader.gameObject.SetActive(false);
+		IntroEnded = true;
 	}
 }
