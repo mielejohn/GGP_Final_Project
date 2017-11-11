@@ -25,7 +25,7 @@ public class FrameController : MonoBehaviour {
 	[SerializeField]private float Jspeed;
 	[SerializeField]private float DashBuffer;
 	public Rigidbody RB;
-	float tempY = 0f;
+	//float tempY = 0f;
 	private float moveX;
 	private float moveZ;
 
@@ -70,6 +70,7 @@ public class FrameController : MonoBehaviour {
 	[SerializeField] public bool canBoost = true;
 	public GameObject enemy;
 	public GameObject TestSpawn;
+	public Camera RayCam;
 
 
 	[Space]
@@ -82,6 +83,7 @@ public class FrameController : MonoBehaviour {
 
 
 	void Start () {
+		enemy = GameObject.FindGameObjectWithTag ("Enemy");
 		//gm = GameObject.FindGameObjectWithTag ("GameManage");
 
 		switch(PlayerPrefs.GetInt("FrameChoice")){
@@ -144,6 +146,16 @@ public class FrameController : MonoBehaviour {
 
 		prevState = state;
 		state = GamePad.GetState (playerIndex);
+
+		RaycastHit hit;
+
+		if (Physics.Raycast (transform.position, Vector3.forward, out hit, 1000.0f)) {
+			//print ("Found an object - distance: " + hit.distance + ", the item is - Tag:" + hit.collider.tag);
+			if (hit.collider.tag == "Enemy") {
+				print ("Hit the enemy");
+			}
+		}
+
 
 		//Movement---------------------------------------------------------------------------------------------------------------------------------
 
@@ -212,7 +224,7 @@ public class FrameController : MonoBehaviour {
 		//}
 
 		//RB.MoveRotation (transform.rotation * Time.deltaTime);
-
+	/*
 		if (Input.GetButtonDown ("LockOn") || prevState.Buttons.RightStick == ButtonState.Pressed && state.Buttons.RightStick == ButtonState.Released) {
 			tempY = transform.rotation.eulerAngles.y;
 			//Debug.Log("the y rotation is" + tempY);
@@ -239,6 +251,7 @@ public class FrameController : MonoBehaviour {
 			Debug.Log ("LockOn is true");
 			transform.rotation = Quaternion.LookRotation (enemy.transform.position - transform.position, Vector3.up);
 		}
+		*/
 
 		if (prevState.DPad.Up == ButtonState.Released && state.DPad.Up == ButtonState.Pressed && RepairBoxStock > 0) {
 			if (Health + 5000 > BaseHealth) {
@@ -305,12 +318,13 @@ public class FrameController : MonoBehaviour {
 
 	}
 
+	/*
 	public void ResetRotations(){
 		Debug.Log ("Lockon is false");
 		LockedOn = false;
 		Debug.Log("the y rotation for reset is" + tempY);
 		transform.rotation = Quaternion.Euler (0.0f, tempY, 0.0f);
-	}
+	}*/
 
 	public IEnumerator BoostBuffer(){
 		yield return new WaitForSeconds (DashBuffer);
