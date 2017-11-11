@@ -8,14 +8,19 @@ using XInputDotNetPure;
 
 public class PracticeArenaLC : MonoBehaviour {
 
+	[Header("References")]
 	//References
 	public FrameController FC;
 
+	[Space]
+	[Header("Spawn Point")]
 	//SpawnPoints
 	public GameObject Frame_Spawn;
 	//public GameObject LeftWeapon_Spawn;
 	//public GameObject RightWeapon_Spawn;
 
+	[Space]
+	[Header("Frames")]
 	//Frames
 	public GameObject Dash_Frame;
 	public GameObject Assault_Frame;
@@ -26,6 +31,8 @@ public class PracticeArenaLC : MonoBehaviour {
 
 	[SerializeField] private bool Pasued = false;
 
+	[Space]
+	[Header("Controller Input")]
 	//Controller input
 	bool playerIndexSet = false;
 	PlayerIndex playerIndex;
@@ -45,6 +52,8 @@ public class PracticeArenaLC : MonoBehaviour {
 	*/
 	//ShoulderWeapons
 
+	[Space]
+	[Header("Helper text")]
 	//HelperText
 	public Text BoostText; 
 	public bool ControlsUp = false;

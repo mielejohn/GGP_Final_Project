@@ -7,9 +7,12 @@ using XInputDotNetPure;
 
 public class MainMenuLC : MonoBehaviour {
 
+	[Header("Main Menu Items")]
 	//Main Menu Items
 	public GameObject MainMenuStuff;
 
+	[Space]
+	[Header("Campaign Items")]
 	//Campaign
 	public RawImage CampaignSelectBackground;
 	public RawImage MissionSelect_SelectBackground;
@@ -18,6 +21,8 @@ public class MainMenuLC : MonoBehaviour {
 	public Text CampaignMissionSelectButton;
 	public Text CampaignCoOpButton;
 
+	[Space]
+	[Header("Multiplayer Items")]
 	//Multiplayer
 	public RawImage MultiplayerSelectBackground;
 	public RawImage HostMatchSelectBackground;
@@ -26,6 +31,8 @@ public class MainMenuLC : MonoBehaviour {
 	public Text MultiPlayerHostGameButton;
 	public Text MultiPlayerFindGameButton;
 
+	[Space]
+	[Header("Practice Items")]
 	//Practice
 	public RawImage PracticeSelectBackground;
 	public RawImage TutorialSelectBackground;
@@ -34,17 +41,25 @@ public class MainMenuLC : MonoBehaviour {
 	public Text PracticeTutorialButton;
 	public Text PracticeTestArena;
 
+	[Space]
+	[Header("Colors")]
 	//Color
 	public Color SelectColor;
 	public Color deSelectColor;
 
+	[Space]
+	[Header("Minor Buttons")]
 	//Minor buttons
 	public Text SettingsButton;
 	public Text QuitGameButton;
 
+	[Space]
+	[Header("Settings Items")]
 	//Settings buttons
 	public GameObject SettingsStuff;
 
+	[Space]
+	[Header("Volume controls")]
 	//VolumeControls
 	public Text EffectVolume;
 	public Slider EffectVolumeSlider;
@@ -53,6 +68,8 @@ public class MainMenuLC : MonoBehaviour {
 	public Text MusicVolume;
 	public Slider MusicVolumeSlider;
 
+	[Space]
+	[Header("Subtitle Items")]
 	//Subtitles
 	public RawImage SubtitlesSelectOnImage;
 	public RawImage SubtitlesSelectOffImage;
@@ -61,9 +78,14 @@ public class MainMenuLC : MonoBehaviour {
 	public Color SubtitlesSelectColor;
 	public bool SubtitlesChoice = false;
 
+	[Space]
+	[Header("Msic.")]
+	//Misc Items
 	public GameObject ScreenFader;
 	public bool Selected;
 
+	[Space]
+	[Header("Controller Input")]
 	//Controller input
 	bool playerIndexSet = false;
 	PlayerIndex playerIndex;

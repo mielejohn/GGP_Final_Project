@@ -7,9 +7,12 @@ using XInputDotNetPure;
 
 public class MissionSelectLC : MonoBehaviour {
 
+	[Header("Animations")]
 	//Animations
 	public GameObject ScreenFader;
 
+	[Space]
+	[Header("Mission Select Buttons")]
 	//Buttons
 	public Text Mission1;
 	public GameObject Mission1SelectBG;
@@ -21,13 +24,19 @@ public class MissionSelectLC : MonoBehaviour {
 	public GameObject Mission4SelectBG;
 	public Text menuButton;
 
+	[Space]
+	[Header("Mission Information")]
 	//MissionInformation
 	public GameObject MissionImage;
 	public Text MissionInfo;
 
+	[Space]
+	[Header("Color")]
 	//Color
 	public Color SelectColor;
 
+	[Space]
+	[Header("Controller Input")]
 	//Controller input
 	bool playerIndexSet = false;
 	PlayerIndex playerIndex;
@@ -35,7 +44,8 @@ public class MissionSelectLC : MonoBehaviour {
 	GamePadState prevState;
 	private int ControllerSpot = 0;
 
-
+	[Space]
+	[Header("Screen Change Items")]
 	//Screen Change
 	public Slider loadingBar;
 	public GameObject loadingImage;
@@ -88,7 +98,6 @@ public class MissionSelectLC : MonoBehaviour {
 				break;
 			}
 		}
-
 		if (prevState.DPad.Down == ButtonState.Pressed && state.DPad.Down == ButtonState.Released && ControllerSpot < 4) {
 			ControllerSpot++;
 			ControllerSelect ();
@@ -103,7 +112,7 @@ public class MissionSelectLC : MonoBehaviour {
 			MainMenuButton ();
 		}
 	}
-
+		
 	public void MissionOneSelect(){
 		Mission1.color=SelectColor;
 		PlayerPrefs.SetInt ("MissionSelect", 3);

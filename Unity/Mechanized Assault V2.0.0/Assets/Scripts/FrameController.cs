@@ -6,8 +6,11 @@ using XInputDotNetPure;
 
 public class FrameController : MonoBehaviour {
 
+	[Header("Top reference Object")]
 	public GameObject topObject;
 
+	[Space]
+	[Header("Camera")]
 	//Camera
 	public GameObject PlayerCamera;
 	private float MouseSensitivity = 175.0f;
@@ -15,6 +18,8 @@ public class FrameController : MonoBehaviour {
 	[SerializeField] public float CameraRotationLimitX = 0f;
 	[SerializeField] public float CameraRotationLimitY = 0f;
 
+	[Space]
+	[Header("Speed and Movement")]
 	//Speed and movement
 	[SerializeField]private float Gspeed;
 	[SerializeField]private float Jspeed;
@@ -24,27 +29,41 @@ public class FrameController : MonoBehaviour {
 	private float moveX;
 	private float moveZ;
 
+	[Space]
+	[Header("Stats")]
 	//Stats
 	[SerializeField]private int BaseHealth;
 	[SerializeField]private int Health;
 
+	[Space]
+	[Header("Spawns")]
 	//Spawns
 	public GameObject LeftWeapon_Spawn;
 	public GameObject RightWeapon_Spawn;
 
+	[Space]
+	[Header("Left Weapons")]
 	//LeftWeapons
+	public GameObject L_Arm;
 	public GameObject L_Assault_Rifle;
 	public GameObject L_SMG;
 	public GameObject L_Sniper_Rifle;
 
+	[Space]
+	[Header("Right Weapons")]
 	//RightWeapons
+	public GameObject R_Arm;
 	public GameObject R_Assault_Rifle;
 	public GameObject R_SMG;
 	public GameObject R_Sniper_Rifle;
 
+	[Header("Resources")]
+	[Space]
 	//Resource Crates
 	[SerializeField]private int RepairBoxStock = 0;
 
+	[Space]
+	[Header("Misc.")]
 	// MISC.
 	public bool LockedOn = false;
 	[SerializeField]public bool OnGround=true;
@@ -53,6 +72,8 @@ public class FrameController : MonoBehaviour {
 	public GameObject TestSpawn;
 
 
+	[Space]
+	[Header("Controller Input")]
 	//Controller input
 	bool playerIndexSet = false;
 	PlayerIndex playerIndex;
@@ -61,6 +82,7 @@ public class FrameController : MonoBehaviour {
 
 
 	void Start () {
+		//gm = GameObject.FindGameObjectWithTag ("GameManage");
 
 		switch(PlayerPrefs.GetInt("FrameChoice")){
 		case 0:
@@ -105,21 +127,20 @@ public class FrameController : MonoBehaviour {
 	void Update () {
 
 		//ControlleSync---------------------------------------------------------------------------------------------------------------------------
-
-		if (!playerIndexSet || !prevState.IsConnected)
-		{
-			for (int i = 0; i < 4; ++i)
+			if (!playerIndexSet || !prevState.IsConnected)
 			{
-				PlayerIndex testPlayerIndex = (PlayerIndex)i;
-				GamePadState testState = GamePad.GetState(testPlayerIndex);
-				if (testState.IsConnected)
+				for (int i = 0; i < 4; ++i)
 				{
-					Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
-					playerIndex = testPlayerIndex;
-					playerIndexSet = true;
+					PlayerIndex testPlayerIndex = (PlayerIndex)i;
+					GamePadState testState = GamePad.GetState(testPlayerIndex);
+					if (testState.IsConnected)
+					{
+						Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
+						playerIndex = testPlayerIndex;
+						playerIndexSet = true;
+					}
 				}
 			}
-		}
 
 		prevState = state;
 		state = GamePad.GetState (playerIndex);
@@ -304,7 +325,7 @@ public class FrameController : MonoBehaviour {
 			Debug.Log ("L Weapon Spawned");
 			L_SMG_I.transform.position = LeftWeapon_Spawn.transform.position;
 			Debug.Log ("L Weapon positon Changed");
-			L_SMG_I.transform.parent = transform;
+			L_SMG_I.transform.parent = L_Arm.gameObject.transform;
 			break;
 
 		case 1:
@@ -312,7 +333,7 @@ public class FrameController : MonoBehaviour {
 			Debug.Log ("L Weapon Spawned");
 			L_AssaultRifle_I.transform.position = LeftWeapon_Spawn.transform.position;
 			Debug.Log ("L Weapon positon Changed");
-			L_AssaultRifle_I.transform.parent = transform;
+			L_AssaultRifle_I.transform.parent = L_Arm.gameObject.transform;
 			break;
 
 		case 2:
@@ -320,7 +341,7 @@ public class FrameController : MonoBehaviour {
 			Debug.Log ("L Weapon Spawned");
 			L_SniperRifle_I.transform.position = LeftWeapon_Spawn.transform.position;
 			Debug.Log ("L Weapon positon Changed");
-			L_SniperRifle_I.transform.parent = transform;
+			L_SniperRifle_I.transform.parent = L_Arm.gameObject.transform;
 			break;
 
 		}
@@ -334,7 +355,7 @@ public class FrameController : MonoBehaviour {
 			Debug.Log ("R Weapon Spawned");
 			R_SMG_I.gameObject.transform.position = RightWeapon_Spawn.gameObject.transform.position;
 			Debug.Log ("R Weapon positon Changed");
-			R_SMG_I.transform.parent = transform;
+			R_SMG_I.transform.parent = R_Arm.gameObject.transform;
 			break;
 
 		case 1:
@@ -342,7 +363,7 @@ public class FrameController : MonoBehaviour {
 			Debug.Log ("R Weapon Spawned");
 			R_AssaultRifle_I.gameObject.transform.position = RightWeapon_Spawn.gameObject.transform.position;
 			Debug.Log ("R Weapon positon Changed");
-			R_AssaultRifle_I.transform.parent = transform;
+			R_AssaultRifle_I.transform.parent = R_Arm.gameObject.transform;
 			break;
 
 		case 2:
@@ -350,7 +371,7 @@ public class FrameController : MonoBehaviour {
 			Debug.Log ("R Weapon Spawned");
 			R_SniperRifle_I.gameObject.transform.position = RightWeapon_Spawn.gameObject.transform.position;
 			Debug.Log ("R Weapon positon Changed");
-			R_SniperRifle_I.transform.parent = transform;
+			R_SniperRifle_I.transform.parent = R_Arm.gameObject.transform;
 			break;
 
 		}

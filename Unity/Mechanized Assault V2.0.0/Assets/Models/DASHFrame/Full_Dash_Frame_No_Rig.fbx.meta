@@ -24,6 +24,41 @@ ModelImporter:
     100032: UpperLeftleg1
     100034: UpperRightArm1
     100036: UpperRightLeg1
+    100038: Head4
+    100040: Head5
+    100042: LeftHand3
+    100044: LeftShoulder3
+    100046: LeftToe2
+    100048: LoweRightArm2
+    100050: LowerLeftHand2
+    100052: LowerLeftLeg2
+    100054: LowerRightLeg2
+    100056: polySurface54
+    100058: polySurface55
+    100060: polySurface56
+    100062: polySurface57
+    100064: RightHand3
+    100066: RightToe2
+    100068: transform18
+    100070: transform19
+    100072: transform20
+    100074: transform21
+    100076: transform22
+    100078: transform23
+    100080: transform24
+    100082: transform25
+    100084: transform26
+    100086: transform27
+    100088: transform28
+    100090: transform29
+    100092: transform30
+    100094: transform31
+    100096: transform32
+    100098: transform33
+    100100: transform34
+    100102: UpperLeftleg2
+    100104: UpperRightArm2
+    100106: UpperRightLeg2
     400000: //RootNode
     400002: Head2
     400004: LeftHand1
@@ -43,6 +78,41 @@ ModelImporter:
     400032: UpperLeftleg1
     400034: UpperRightArm1
     400036: UpperRightLeg1
+    400038: Head4
+    400040: Head5
+    400042: LeftHand3
+    400044: LeftShoulder3
+    400046: LeftToe2
+    400048: LoweRightArm2
+    400050: LowerLeftHand2
+    400052: LowerLeftLeg2
+    400054: LowerRightLeg2
+    400056: polySurface54
+    400058: polySurface55
+    400060: polySurface56
+    400062: polySurface57
+    400064: RightHand3
+    400066: RightToe2
+    400068: transform18
+    400070: transform19
+    400072: transform20
+    400074: transform21
+    400076: transform22
+    400078: transform23
+    400080: transform24
+    400082: transform25
+    400084: transform26
+    400086: transform27
+    400088: transform28
+    400090: transform29
+    400092: transform30
+    400094: transform31
+    400096: transform32
+    400098: transform33
+    400100: transform34
+    400102: UpperLeftleg2
+    400104: UpperRightArm2
+    400106: UpperRightLeg2
     2300000: Head2
     2300002: LeftHand1
     2300004: LeftShoulder2
@@ -61,6 +131,7 @@ ModelImporter:
     2300030: UpperRightArm1
     2300032: UpperRightLeg1
     2300034: //RootNode
+    2300036: Head5
     3300000: Head2
     3300002: LeftHand1
     3300004: LeftShoulder2
@@ -79,6 +150,7 @@ ModelImporter:
     3300030: UpperRightArm1
     3300032: UpperRightLeg1
     3300034: //RootNode
+    3300036: Head5
     4300000: polySurface51
     4300002: polySurface52
     4300004: LowerRightLeg1
@@ -97,6 +169,8 @@ ModelImporter:
     4300030: RightHand1
     4300032: UpperRightLeg1
     4300034: DASH_Frame
+    4300036: RightToe2
+    4300038: Head5
     9500000: //RootNode
   materials:
     importMaterials: 1

@@ -58,11 +58,13 @@
      <Compile Include="Assets\Scripts\Enemies\GruntEnemy\EnemyAiStates.cs" />
      <Compile Include="Assets\Scripts\Enemies\GruntEnemy\NavEnemy.cs" />
      <Compile Include="Assets\Scripts\FrameController.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\MainMenuLC.cs" />
      <Compile Include="Assets\Scripts\MechRotaterKeyboard.cs" />
      <Compile Include="Assets\Scripts\MechSelectionLC.cs" />
      <Compile Include="Assets\Scripts\MissionSelectLC.cs" />
      <Compile Include="Assets\Scripts\PracticeArenaLC.cs" />
+     <Compile Include="Assets\Scripts\RotatingArm_Test.cs" />
      <Compile Include="Assets\Scripts\WeaponScripts\L_Assault_Rifle.cs" />
      <Compile Include="Assets\Scripts\WeaponScripts\L_Sniper_Rifle.cs" />
      <Compile Include="Assets\Scripts\WeaponScripts\L_Sub_Machinegun.cs" />

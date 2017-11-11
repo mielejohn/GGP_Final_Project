@@ -12,7 +12,10 @@ public class MechSelectionLC : MonoBehaviour {
 	public MechRotaterKeyboard MRK;
 	public GameObject AllMechItems;
 	public GameObject AllWeaponItems;
-	public Material MISCU_Frame_Color;
+
+
+	[Space]
+	[Header("Frame Items")]
 	//Frames
 	public int Frame_Number = 0;
 	public Text Frame_Name;
@@ -22,47 +25,67 @@ public class MechSelectionLC : MonoBehaviour {
 	public GameObject DASH_Frame;
 	public GameObject Assault_Frame;
 	public GameObject Support_Frame;
-
 	public GameObject chosenFrame;
+	public Material MISCU_Frame_Color;
 
+	[Space]
+	[Header("Armore Items")]
 	//Armor Items
 	public int Armor;
 	public Text ArmorNumberText;
 
+	[Space]
+	[Header("Weight Items")]
 	//Weight Items
 	public int Weight;
 	public Text WeightNumberText;
 
+	[Space]
+	[Header("Speed Items")]
 	//Speed Items
 	public int Speed;
 	public Text SpeedNumberText;
 
+	[Space]
+	[Header("Dash Items")]
 	//Dash Items
 	public int DashChargeTime;
 	public Text DashTime;
 
+	[Space]
+	[Header("Modifiers")]
 	//Modifiers
 	public Dropdown Modifier1;
 	public Dropdown Modifier2;
 	public Dropdown Modifier3;
 
 
-
+	[Space]
+	[Space]
+	[Header("WEAPONS")]
 	//WEAPONS
 	//------------------------------------------------------------------
-
+	[Header("Selector Images")]
 	public GameObject rightSelectorImage;
 	public GameObject leftSelectorImage;
 
+	[Space]
+	[Header("Left Weapons")]
+	//Left Weapons
 	public GameObject L_SMG;
 	public GameObject L_Assault_Rifle;
 	public GameObject L_SniperRifle;
 
+	[Space]
+	[Header("Right Weapons")]
+	//Right Weapons
 	public GameObject R_SMG;
 	public GameObject R_Assault_Rifle;
 	public GameObject R_SniperRifle;
 
-	//LeftWeapon
+	[Space]
+	[Header("Left Weapon Stats")]
+	//LeftWeaponStats
 	public int LWeapon_Number = 0;
 	public Text LWeapon_Name;
 	public GameObject LWeaponSpawn;
@@ -73,14 +96,17 @@ public class MechSelectionLC : MonoBehaviour {
 	[SerializeField] public int LWeapon_Accuray;
 	[SerializeField] public int LWeapon_AmmoCount;
 
-	//LeftWeaponStats
+	[Space]
+	[Header("Left Weapon Text Items")]
+	//LeftWeaponTextItems
 	public Text L_DamageText;
 	public Text L_RangeText;
 	public Text L_AccuracyText;
 	public Text L_AmmoCountText;
 
-
-	//RightWeapon
+	[Space]
+	[Header("Right Weapon Stats")]
+	//RightWeaponStats
 	public int RWeapon_Number = 0;
 	public Text RWeapon_Name;
 	public GameObject RWeaponSpawn;
@@ -91,7 +117,9 @@ public class MechSelectionLC : MonoBehaviour {
 	[SerializeField] public int RWeapon_Accuray;
 	[SerializeField] public int RWeapon_AmmoCount;
 
-	//RightWeaponStats
+	[Space]
+	[Header("Right Weapon Text Items")]
+	//RightWeaponTextItems
 	public Text R_DamageText;
 	public Text R_RangeText;
 	public Text R_AccuracyText;
@@ -100,9 +128,13 @@ public class MechSelectionLC : MonoBehaviour {
 
 	//MISC
 	//------------------------------------------------------------------
-
+	[Space]
+	[Space]
+	[Header("MISC.")]
 	public string MenuType = "Mech";
 
+	[Space]
+	[Header("Contoller Input")]
 	//Controller input
 	bool playerIndexSet = false;
 	PlayerIndex playerIndex;
@@ -110,6 +142,8 @@ public class MechSelectionLC : MonoBehaviour {
 	GamePadState prevState;
 	public int ControllerSelection;
 
+	[Space]
+	[Header("Screen Change")]
 	//Screen Change
 	public Slider loadingBar;
 	public GameObject loadingImage;
@@ -118,8 +152,6 @@ public class MechSelectionLC : MonoBehaviour {
 	void Awake(){
 		if (PlayerPrefs.HasKey ("FrameChoice")) {
 			DeletePlayerValues ();
-		} else {
-
 		}
 	}
 
