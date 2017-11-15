@@ -55,7 +55,7 @@ public class PracticeArenaLC : MonoBehaviour {
 	[Space]
 	[Header("Helper text")]
 	//HelperText
-	public Text BoostText; 
+	//public Text BoostText; 
 	public bool ControlsUp = false;
 	public GameObject ControlsObject;
 	public GameObject ControllerHelper;
@@ -64,7 +64,7 @@ public class PracticeArenaLC : MonoBehaviour {
 	void Start () {
 		
 		SpawnFrame ();
-		FC = GameObject.FindGameObjectWithTag ("Player").GetComponent<FrameController>();
+		//FC = GameObject.FindGameObjectWithTag ("Player").GetComponent<FrameController>();
 		//LeftWeapon_Spawn = GameObject.FindGameObjectWithTag ("LWS");
 		//RightWeapon_Spawn = GameObject.FindGameObjectWithTag ("RWS");
 		//SpawnLeftWeapon ();
@@ -93,11 +93,11 @@ public class PracticeArenaLC : MonoBehaviour {
 		prevState = state;
 		state = GamePad.GetState(playerIndex);
 
-		if (FC.canBoost == false) {
+		/*if (FC.canBoost == false) {
 			BoostText.text = "No";
 		} else {
 			BoostText.text = "Yes";
-		}
+		}*/
 
 		if (Input.GetKey (KeyCode.P) && Input.GetKey (KeyCode.LeftAlt)) {
 			SceneManager.LoadScene ("PracticeArenaScene", LoadSceneMode.Single);

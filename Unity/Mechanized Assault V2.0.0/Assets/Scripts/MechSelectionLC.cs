@@ -334,7 +334,9 @@ public class MechSelectionLC : MonoBehaviour {
 
 			//Variables
 			Armor = 50000;
+
 			Weight = 80;
+
 			Speed = 50;
 			break;
 		}

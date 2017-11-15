@@ -24,6 +24,10 @@ public class FrameController : MonoBehaviour {
 	[SerializeField]private float Gspeed;
 	[SerializeField]private float Jspeed;
 	[SerializeField]private float DashBuffer;
+	[SerializeField]private float DashCost;
+	[SerializeField] private float DashCapacity;
+	[SerializeField] private float DashRegenBufferTime;
+	[SerializeField] private float DashRegenAmount;
 	public Rigidbody RB;
 	//float tempY = 0f;
 	private float moveX;
@@ -71,6 +75,8 @@ public class FrameController : MonoBehaviour {
 	public GameObject enemy;
 	public GameObject TestSpawn;
 	public Camera RayCam;
+	public bool Aiming=false;
+	public bool DashRegen = false;
 
 
 	[Space]
@@ -83,7 +89,7 @@ public class FrameController : MonoBehaviour {
 
 
 	void Start () {
-		enemy = GameObject.FindGameObjectWithTag ("Enemy");
+		//enemy = GameObject.FindGameObjectWithTag ("Enemy");
 		//gm = GameObject.FindGameObjectWithTag ("GameManage");
 
 		switch(PlayerPrefs.GetInt("FrameChoice")){
@@ -91,7 +97,11 @@ public class FrameController : MonoBehaviour {
 			Debug.Log ("Chose DASH");
 			Gspeed = 5500;
 			Jspeed = 90.0f;
-			DashBuffer = 0.4f;
+			DashBuffer = 0.3f;
+			DashCost = 140;
+			DashCapacity = 1000;
+			DashRegenBufferTime = 0.15f;
+			DashRegenAmount = 3;
 			BaseHealth = 35000;
 			Health = 35000;
 			break;
@@ -100,7 +110,11 @@ public class FrameController : MonoBehaviour {
 			Debug.Log ("Chose Assault");
 			Gspeed = 4500;
 			Jspeed = 82.0f;
-			DashBuffer = 0.6f;
+			DashBuffer = 0.4f;
+			DashCost = 200;
+			DashCapacity = 1000;
+			DashRegenBufferTime = 0.25f;
+			DashRegenAmount = 2;
 			BaseHealth = 42500;
 			Health = 42500;
 			break;
@@ -109,7 +123,11 @@ public class FrameController : MonoBehaviour {
 			Debug.Log ("Chose Support");
 			Gspeed = 4000;
 			Jspeed = 75.0f;
-			DashBuffer = 0.9f;
+			DashBuffer = 0.7f;
+			DashCost = 250;
+			DashCapacity = 1000;
+			DashRegenBufferTime = 0.30f;
+			DashRegenAmount = 1.5f;
 			BaseHealth = 50000;
 			Health = 50000;
 			break;
@@ -120,7 +138,7 @@ public class FrameController : MonoBehaviour {
 
 		LeftWeapon_Spawn = GameObject.FindGameObjectWithTag ("LWS");
 		RightWeapon_Spawn = GameObject.FindGameObjectWithTag ("RWS");
-		//enemy = GameObject.FindGameObjectWithTag ("Enemy");
+		enemy = GameObject.FindGameObjectWithTag ("Enemy");
 		TestSpawn = GameObject.FindGameObjectWithTag ("TestSpawn");
 		SpawnLeftWeapon ();
 		SpawnRightWeapon ();
@@ -148,13 +166,35 @@ public class FrameController : MonoBehaviour {
 		state = GamePad.GetState (playerIndex);
 
 		RaycastHit hit;
-
-		if (Physics.Raycast (transform.position, Vector3.forward, out hit, 1000.0f)) {
-			//print ("Found an object - distance: " + hit.distance + ", the item is - Tag:" + hit.collider.tag);
-			if (hit.collider.tag == "Enemy") {
+		Debug.DrawRay (this.transform.position, Vector3.forward, Color.red);
+		if (Physics.SphereCast (PlayerCamera.gameObject.transform.position, 55.0f, PlayerCamera.gameObject.transform.forward, out hit)) {
+			print ("Hit something");
+			if (hit.collider.tag == "Enemy" && Aiming == false) {
+				enemy = hit.collider.gameObject;
+				Aiming = true;
 				print ("Hit the enemy");
-			}
+			} 
+
+			if (hit.collider.tag != "Enemy") {				
+				print ("Unlocking from the enemy");
+				Aiming = false;
+			} 
+		} 
+
+		if (Aiming == true) {
+			L_Arm.gameObject.transform.LookAt (enemy.transform);
+			R_Arm.gameObject.transform.LookAt (enemy.transform);
 		}
+
+		if (enemy == null || Aiming == false) {
+			L_Arm.transform.rotation = Quaternion.Lerp(L_Arm.transform.rotation, transform.rotation , 7.0f*Time.deltaTime);
+			R_Arm.transform.rotation = Quaternion.Lerp(R_Arm.transform.rotation, transform.rotation , 7.0f*Time.deltaTime);
+			//Aiming = false;
+		}
+
+
+
+	
 
 
 		//Movement---------------------------------------------------------------------------------------------------------------------------------
@@ -162,17 +202,17 @@ public class FrameController : MonoBehaviour {
 		if (Input.GetButton ("Horizontal") || Input.GetButton ("Vertical")) {
 			moveX = Input.GetAxis ("Horizontal") * Gspeed * Time.deltaTime;
 			moveZ = Input.GetAxis ("Vertical") * Gspeed * Time.deltaTime;
-			Debug.Log ("Bout to call Keyboard input");
+			//Debug.Log ("Bout to call Keyboard input");
 			Move(moveX, moveZ);
-			Debug.Log ("Just called Keyboard input");
+			//Debug.Log ("Just called Keyboard input");
 		}
 
 		if (state.ThumbSticks.Left.X > 0 || state.ThumbSticks.Left.Y > 0 || state.ThumbSticks.Left.X < 0 || state.ThumbSticks.Left.Y < 0) {
 			moveX = state.ThumbSticks.Left.X * Gspeed * Time.deltaTime;
 			moveZ = state.ThumbSticks.Left.Y * Gspeed * Time.deltaTime;
-			Debug.Log ("Bout to call Controller input");
+			//Debug.Log ("Bout to call Controller input");
 			Move(moveX, moveZ);
-			Debug.Log ("Just called Controller input");
+			//Debug.Log ("Just called Controller input");
 		}
 
 		if (Input.GetButton ("Flight") || state.Triggers.Left > 0) {
@@ -182,14 +222,14 @@ public class FrameController : MonoBehaviour {
 		}
 
 		if (Input.GetAxis ("Horizontal") > 0) {
-			Debug.Log ("HOrizontal is greater than 0");
+			//Debug.Log ("HOrizontal is greater than 0");
 			if (PlayerCamera.transform.localPosition.x < 400) {
 				PlayerCamera.transform.Translate (Vector3.right * Time.deltaTime * 5);
 			}
 		}
 
 		if (Input.GetAxis("Horizontal") < 0) {
-			Debug.Log ("HOrizontal is Less than 0");
+			//Debug.Log ("HOrizontal is Less than 0");
 			if (PlayerCamera.transform.localPosition.x > -400) {
 				PlayerCamera.transform.Translate (Vector3.left * Time.deltaTime * 5);
 			}
@@ -208,20 +248,34 @@ public class FrameController : MonoBehaviour {
 
 		//Lockon----------------------------------------------------------------------------------------------------------------------------------
 
-		if (Input.GetButtonDown ("Jump") || state.Triggers.Right > 0) {
+		if (Input.GetButtonDown ("Jump") || state.Triggers.Right > 0.25) {
 			StartCoroutine(Boost ());
 		}
+
+		if (state.Triggers.Right > 0.25 && state.ThumbSticks.Right.X > 0.90 && canBoost == true) {
+			transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation *= Quaternion.Euler(0,70,0), 7.0f*Time.deltaTime);
+			canBoost = false;
+			StartCoroutine (BoostBuffer ());
+		}
+
+		if (state.Triggers.Right < -0.25 && state.ThumbSticks.Right.X > 0.90 && canBoost == true) {
+			transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation *= Quaternion.Euler(0,70,0), 7.0f*Time.deltaTime);
+			canBoost = false;
+			StartCoroutine (BoostBuffer ());
+		}
+
+		if (DashRegen == true) {
+
+		}
+
 		CameraRotationLimitX -= Input.GetAxis ("Mouse Y") * CameraLimitSensitivity;
 		CameraRotationLimitX -= state.ThumbSticks.Right.Y * CameraLimitSensitivity;
-		CameraRotationLimitX = Mathf.Clamp (CameraRotationLimitX, -10, 10);
+		CameraRotationLimitX = Mathf.Clamp (CameraRotationLimitX, -30, 30);
 
-		//CameraRotationLimitY -= Input.GetAxis ("Mouse X") * CameraLimitSensitivity;
-		//CameraRotationLimitY = Mathf.Clamp (CameraRotationLimitY, -10, 15);
-		//if (LockedOn == false) {
+
 			this.gameObject.transform.rotation *= Quaternion.Euler (topObject.transform.rotation.x, Input.GetAxis ("Mouse X") * Time.deltaTime * MouseSensitivity, topObject.transform.rotation.z);// Player Rotation
 			this.gameObject.transform.rotation *= Quaternion.Euler (topObject.transform.rotation.x, state.ThumbSticks.Right.X * Time.deltaTime * MouseSensitivity, topObject.transform.rotation.z);
 			PlayerCamera.gameObject.transform.localEulerAngles = new Vector3 (CameraRotationLimitX, 0.0f, 0.0f); // Camera Rotation
-		//}
 
 		//RB.MoveRotation (transform.rotation * Time.deltaTime);
 	/*
@@ -255,7 +309,7 @@ public class FrameController : MonoBehaviour {
 
 		if (prevState.DPad.Up == ButtonState.Released && state.DPad.Up == ButtonState.Pressed && RepairBoxStock > 0) {
 			if (Health + 5000 > BaseHealth) {
-				Debug.Log ("Health + 5000 is greater than " + BaseHealth);
+				//Debug.Log ("Health + 5000 is greater than " + BaseHealth);
 			
 				Health = BaseHealth;
 				RepairBoxStock--;
@@ -267,7 +321,7 @@ public class FrameController : MonoBehaviour {
 
 		if (Input.GetKeyDown(KeyCode.Alpha1) && RepairBoxStock > 0) {
 			if (Health + 5000 > BaseHealth) {
-				Debug.Log ("Health + 5000 is greater than " + BaseHealth);
+				//Debug.Log ("Health + 5000 is greater than " + BaseHealth);
 				int tempHealth = Health + 5000;
 				Health += tempHealth - BaseHealth ;
 				RepairBoxStock--;
@@ -280,7 +334,7 @@ public class FrameController : MonoBehaviour {
 	}
 
 	void Move(float movex, float movez){
-		Debug.Log ("Calling move X and Z");
+		//Debug.Log ("Calling move X and Z");
 		transform.position += transform.forward * Time.deltaTime * movez;
 		transform.position += transform.right * Time.deltaTime * movex;
 	}
@@ -292,8 +346,15 @@ public class FrameController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other){
+		Debug.Log ("Colliding");
 		if (other.tag == "RepairCrate") {
 			RepairBoxStock++;
+			Destroy (other.gameObject);
+		}
+
+		if (other.tag == "L1_Bullet") {
+			Debug.Log ("Colliding Bullet");
+			Health -= 75;
 			Destroy (other.gameObject);
 		}
 	}
@@ -307,15 +368,28 @@ public class FrameController : MonoBehaviour {
 	}
 
 	public IEnumerator Boost(){
-		if (canBoost == true) {
-			float BoostSpeed = Gspeed * 2;
+
+		if (canBoost == true && DashCapacity - DashCost > 0) {
 			canBoost = false;
+
+			DashCapacity -= DashCost;
+			StartCoroutine (DashRecharge ());
+			float BoostSpeed = Gspeed * 2;
 			Gspeed += BoostSpeed;
-			yield return new WaitForSeconds (0.5f);
-			Gspeed -= BoostSpeed;
+			yield return new WaitForSeconds (0.25f);
 			StartCoroutine (BoostBuffer ());
+			yield return new WaitForSeconds (0.25f);
+			Gspeed -= BoostSpeed;
+
 		}
 
+	}
+
+	public IEnumerator DashRecharge(){
+		while(DashCapacity < 1000){
+			DashCapacity += DashRegenAmount;
+			yield return new WaitForSeconds (DashRegenBufferTime);
+		}
 	}
 
 	/*
@@ -336,25 +410,25 @@ public class FrameController : MonoBehaviour {
 
 		case 0:
 			GameObject L_SMG_I = Instantiate (L_SMG);
-			Debug.Log ("L Weapon Spawned");
+			//Debug.Log ("L Weapon Spawned");
 			L_SMG_I.transform.position = LeftWeapon_Spawn.transform.position;
-			Debug.Log ("L Weapon positon Changed");
+			//Debug.Log ("L Weapon positon Changed");
 			L_SMG_I.transform.parent = L_Arm.gameObject.transform;
 			break;
 
 		case 1:
 			GameObject L_AssaultRifle_I = Instantiate (L_Assault_Rifle);
-			Debug.Log ("L Weapon Spawned");
+			//Debug.Log ("L Weapon Spawned");
 			L_AssaultRifle_I.transform.position = LeftWeapon_Spawn.transform.position;
-			Debug.Log ("L Weapon positon Changed");
+			//Debug.Log ("L Weapon positon Changed");
 			L_AssaultRifle_I.transform.parent = L_Arm.gameObject.transform;
 			break;
 
 		case 2:
 			GameObject L_SniperRifle_I = Instantiate (L_Sniper_Rifle);
-			Debug.Log ("L Weapon Spawned");
+			//Debug.Log ("L Weapon Spawned");
 			L_SniperRifle_I.transform.position = LeftWeapon_Spawn.transform.position;
-			Debug.Log ("L Weapon positon Changed");
+			//Debug.Log ("L Weapon positon Changed");
 			L_SniperRifle_I.transform.parent = L_Arm.gameObject.transform;
 			break;
 
@@ -366,25 +440,25 @@ public class FrameController : MonoBehaviour {
 
 		case 0:
 			GameObject R_SMG_I = Instantiate (R_SMG);
-			Debug.Log ("R Weapon Spawned");
+			//Debug.Log ("R Weapon Spawned");
 			R_SMG_I.gameObject.transform.position = RightWeapon_Spawn.gameObject.transform.position;
-			Debug.Log ("R Weapon positon Changed");
+			//Debug.Log ("R Weapon positon Changed");
 			R_SMG_I.transform.parent = R_Arm.gameObject.transform;
 			break;
 
 		case 1:
 			GameObject R_AssaultRifle_I = Instantiate (R_Assault_Rifle);
-			Debug.Log ("R Weapon Spawned");
+			//Debug.Log ("R Weapon Spawned");
 			R_AssaultRifle_I.gameObject.transform.position = RightWeapon_Spawn.gameObject.transform.position;
-			Debug.Log ("R Weapon positon Changed");
+			//Debug.Log ("R Weapon positon Changed");
 			R_AssaultRifle_I.transform.parent = R_Arm.gameObject.transform;
 			break;
 
 		case 2:
 			GameObject R_SniperRifle_I = Instantiate (R_Sniper_Rifle);
-			Debug.Log ("R Weapon Spawned");
+			//Debug.Log ("R Weapon Spawned");
 			R_SniperRifle_I.gameObject.transform.position = RightWeapon_Spawn.gameObject.transform.position;
-			Debug.Log ("R Weapon positon Changed");
+			//Debug.Log ("R Weapon positon Changed");
 			R_SniperRifle_I.transform.parent = R_Arm.gameObject.transform;
 			break;
 
