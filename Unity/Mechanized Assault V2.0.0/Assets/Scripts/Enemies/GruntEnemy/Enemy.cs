@@ -114,10 +114,17 @@ public class Enemy : MonoBehaviour {
 				nextFire = myTime + fireDelta;
 				GameObject Bullet_I = (GameObject)Instantiate (Bullet);
 				Bullet_I.gameObject.transform.position = LeftButlletSpawn.transform.position;
+
+				GameObject Bullet_II = (GameObject)Instantiate (Bullet);
+				Bullet_II.gameObject.transform.position = RightButlletSpawn.transform.position;
+
 				Bullet_I.GetComponent<Rigidbody> ().AddForce (transform.forward * BulletSpeed, ForceMode.VelocityChange);
+				Bullet_II.GetComponent<Rigidbody> ().AddForce (transform.forward * BulletSpeed, ForceMode.VelocityChange);
+
 				nextFire = nextFire - myTime;
 				myTime = 0.0f;
 				Destroy (Bullet_I, 1.0f);
+				Destroy (Bullet_II, 1.0f);
 			}
 			Debug.Log ("Too close for comfort...");
 		} else {

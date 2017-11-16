@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using XInputDotNetPure;
+using UnityEngine.UI;
 
 public class FrameController : MonoBehaviour {
 
 	[Header("Top reference Object")]
 	public GameObject topObject;
+
+	[Space]
+	[Header("UI Elements")]
+	public Image HealthBarImage;
+
 
 	[Space]
 	[Header("Camera")]
@@ -146,6 +152,7 @@ public class FrameController : MonoBehaviour {
 
 	void Update () {
 
+		HealthBar ();
 		//ControlleSync---------------------------------------------------------------------------------------------------------------------------
 			if (!playerIndexSet || !prevState.IsConnected)
 			{
@@ -404,6 +411,19 @@ public class FrameController : MonoBehaviour {
 		yield return new WaitForSeconds (DashBuffer);
 		canBoost = true;
 	}
+
+	//UI Elements--------------------------------------------------------------------------------
+
+	public void HealthBar(){
+		HealthBarImage.fillAmount = HealthBarMap (Health, 0, BaseHealth, 0, 1);
+	}
+
+	private float HealthBarMap(float Value, float inMin, float inMax, float outMin, float outMax){
+		return (Value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+	}
+
+
+	//Weapon Spawning-----------------------------------------------------------------------------
 
 	public void SpawnLeftWeapon(){
 		switch(PlayerPrefs.GetInt("LeftWeaponChoice")){
