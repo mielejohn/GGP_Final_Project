@@ -5,6 +5,12 @@ using XInputDotNetPure;
 
 public class R_Assault_Rifle : MonoBehaviour {
 
+	[Header("Game Manager")]
+	public GameObject GM;
+	public GameManager GameManager;
+
+	[Space]
+	[Header("Objects and Variables")]
 	public GameObject AR_Bullet;
 	public GameObject RightBulletSpawn;
 	[SerializeField]public int AmmoCount = 400;
@@ -14,19 +20,21 @@ public class R_Assault_Rifle : MonoBehaviour {
 	private float myTime = 0.0f;
 
 	//Controller Items
-	bool playerIndexSet = false;
+	//bool playerIndexSet = false;
 	PlayerIndex playerIndex;
 	GamePadState state;
 	GamePadState prevState;
 
 	void Start () {
+		GM = GameObject.FindGameObjectWithTag ("GameManage");
+		GameManager = GM.GetComponent<GameManager> ();
 		RightBulletSpawn = GameObject.FindGameObjectWithTag ("RBS");
 	}
 		
 	void Update () {
 		
 		myTime = myTime + Time.deltaTime;
-
+		/*
 		if (!playerIndexSet || !prevState.IsConnected)
 		{
 			for (int i = 0; i < 4; ++i)
@@ -44,7 +52,7 @@ public class R_Assault_Rifle : MonoBehaviour {
 
 		prevState = state;
 		state = GamePad.GetState(playerIndex);
-
+		*/
 
 		if (Input.GetButton("Fire2") && AmmoCount >= 0 && myTime > nextFire) {
 			nextFire = myTime + fireDelta;
@@ -57,7 +65,7 @@ public class R_Assault_Rifle : MonoBehaviour {
 			Destroy (R_Bullet_I, 2.0f);
 		}
 
-		if(prevState.Buttons.A == ButtonState.Pressed && state.Buttons.A != ButtonState.Released && AmmoCount >=0  && myTime > nextFire)
+		if(GameManager.prevState.Buttons.A == ButtonState.Pressed && GameManager.state.Buttons.A != ButtonState.Released && AmmoCount >=0  && myTime > nextFire)
 		{
 			nextFire = myTime + fireDelta;
 			GameObject R_Bullet_I = (GameObject)Instantiate (AR_Bullet);

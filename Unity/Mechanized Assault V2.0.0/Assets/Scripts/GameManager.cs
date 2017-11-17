@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour {
 	public GamePadState state;
 	public GamePadState prevState;
 
+	void Awake(){
+
+	}
+
 	// Use this for initialization
 	void Start () {
 		if (gm == null) {
@@ -26,6 +30,7 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		if (!playerIndexSet || !prevState.IsConnected)
 		{
+			print ("index set or is connected are false");
 			for (int i = 0; i < 4; ++i)
 			{
 				PlayerIndex testPlayerIndex = (PlayerIndex)i;
@@ -40,6 +45,13 @@ public class GameManager : MonoBehaviour {
 		}
 
 		prevState = state;
+		print ("Prev state is " + prevState);
 		state = GamePad.GetState(playerIndex);
+		print ("state is " + state);
+
+		if (prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed)
+		{
+			Debug.Log ("A button pressed in manager");
+		}
 	}
 }

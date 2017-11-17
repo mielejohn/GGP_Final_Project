@@ -5,6 +5,12 @@ using XInputDotNetPure;
 
 public class R_Sub_Machinegun : MonoBehaviour {
 
+	[Header("Game Manager")]
+	public GameObject GM;
+	public GameManager GameManager;
+
+	[Space]
+	[Header("Objects and Variables")]
 	public GameObject SMG_Bullet;
 	public GameObject RightBulletSpawn;
 	public int AmmoCount = 400;
@@ -20,13 +26,15 @@ public class R_Sub_Machinegun : MonoBehaviour {
 	GamePadState prevState;
 
 	void Start () {
+		GM = GameObject.FindGameObjectWithTag ("GameManage");
+		GameManager = GM.GetComponent<GameManager> ();
 		//RightBulletSpawn = GameObject.FindGameObjectWithTag ("RBS");
 	}
 
 	void Update () {
 
 		myTime = myTime + Time.deltaTime;
-
+		/*
 		if (!playerIndexSet || !prevState.IsConnected)
 		{
 			for (int i = 0; i < 4; ++i)
@@ -44,6 +52,7 @@ public class R_Sub_Machinegun : MonoBehaviour {
 
 		prevState = state;
 		state = GamePad.GetState(playerIndex);
+		*/
 
 		if (Input.GetButton("Fire2") && AmmoCount >= 0  && myTime > nextFire) {
 			nextFire = myTime + fireDelta;
@@ -56,7 +65,7 @@ public class R_Sub_Machinegun : MonoBehaviour {
 			Destroy (R_Bullet_I, 2.0f);
 		}
 
-		if (prevState.Buttons.A == ButtonState.Pressed && state.Buttons.A != ButtonState.Released && AmmoCount >= 0  && myTime > nextFire) {
+		if (GameManager.prevState.Buttons.A == ButtonState.Pressed && GameManager.state.Buttons.A != ButtonState.Released && AmmoCount >= 0  && myTime > nextFire) {
 			nextFire = myTime + fireDelta;
 			GameObject R_Bullet_I = (GameObject) Instantiate (SMG_Bullet);
 			R_Bullet_I.gameObject.transform.position = RightBulletSpawn.transform.position;

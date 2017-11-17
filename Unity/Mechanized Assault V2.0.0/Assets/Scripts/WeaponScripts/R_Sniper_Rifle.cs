@@ -5,6 +5,12 @@ using XInputDotNetPure;
 
 public class R_Sniper_Rifle : MonoBehaviour {
 
+	[Header("Game Manager")]
+	public GameObject GM;
+	public GameManager GameManager;
+
+	[Space]
+	[Header("Objects and Variables")]
 	public GameObject SR_Bullet;
 	public GameObject RightBulletSpawn;
 	public bool canFire = true;
@@ -12,17 +18,19 @@ public class R_Sniper_Rifle : MonoBehaviour {
 
 
 	//Controller Items
-	bool playerIndexSet = false;
+	//bool playerIndexSet = false;
 	PlayerIndex playerIndex;
 	GamePadState state;
 	GamePadState prevState;
 
 	void Start () {
+		GM = GameObject.FindGameObjectWithTag ("GameManage");
+		GameManager = GM.GetComponent<GameManager> ();
 		//RightBulletSpawn = GameObject.FindGameObjectWithTag ("RBS");
 	}
 		
 	void Update () {
-
+		/*
 		if (!playerIndexSet || !prevState.IsConnected)
 		{
 			for (int i = 0; i < 4; ++i)
@@ -40,7 +48,7 @@ public class R_Sniper_Rifle : MonoBehaviour {
 
 		prevState = state;
 		state = GamePad.GetState(playerIndex);
-
+		*/
 
 		if (Input.GetButtonDown("Fire2") && AmmoCount >= 0 && canFire == true) {
 			Debug.Log ("Firing right");
@@ -53,7 +61,7 @@ public class R_Sniper_Rifle : MonoBehaviour {
 			Destroy (R_Bullet_I, 2.0f);
 		}
 
-		if (prevState.Buttons.A == ButtonState.Pressed && state.Buttons.A == ButtonState.Released && AmmoCount >=0 && canFire == true)
+		if (GameManager.prevState.Buttons.A == ButtonState.Pressed && GameManager.state.Buttons.A == ButtonState.Released && AmmoCount >=0 && canFire == true)
 		{
 			Debug.Log ("Firing right");
 			canFire = false;

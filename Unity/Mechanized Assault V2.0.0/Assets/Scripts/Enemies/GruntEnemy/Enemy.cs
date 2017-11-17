@@ -94,6 +94,7 @@ public class Enemy : MonoBehaviour {
 		} 
 
 		if (health <= 0) {
+			PlayerOfInterest.gameObject.GetComponent<FrameController> ().enemy = null;
 			Destroy (this.gameObject);
 		}
 

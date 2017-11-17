@@ -107,11 +107,11 @@ public class PracticeArenaLC : MonoBehaviour {
 			SceneManager.LoadScene ("TitleScreen", LoadSceneMode.Single);
 		}
 
-		if (prevState.Buttons.Start == ButtonState.Released && state.Buttons.Start == ButtonState.Pressed && Pasued == false) {
+		if (prevState.Buttons.Start == ButtonState.Released && state.Buttons.Start == ButtonState.Pressed || Input.GetKeyDown(KeyCode.Escape) && Pasued == false ) {
 			Pasued = true;
 			Time.timeScale = 0.0f;
 
-		} else if (prevState.Buttons.Start == ButtonState.Released && state.Buttons.Start == ButtonState.Pressed && Pasued == true) {
+		} else if (prevState.Buttons.Start == ButtonState.Released && state.Buttons.Start == ButtonState.Pressed || Input.GetKeyDown(KeyCode.Escape) && Pasued == true) {
 			Pasued = false;
 			Time.timeScale = 1.0f;
 		} 
@@ -163,5 +163,9 @@ public class PracticeArenaLC : MonoBehaviour {
 	public void KeyBoardControls(){
 		KeyboardHelper.SetActive (true);
 		ControllerHelper.SetActive (false);
+	}
+
+	public IEnumerator OutofBounds(){
+		yield return new WaitForSeconds (1.0f);
 	}
 }

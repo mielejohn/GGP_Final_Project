@@ -6,7 +6,11 @@ using UnityEngine.SceneManagement;
 using XInputDotNetPure;
 
 public class MissionSelectLC : MonoBehaviour {
+	[Header("Game Manager")]
+	public GameObject GM;
+	public GameManager GameManager;
 
+	[Space]
 	[Header("Animations")]
 	//Animations
 	public GameObject ScreenFader;
@@ -38,7 +42,7 @@ public class MissionSelectLC : MonoBehaviour {
 	[Space]
 	[Header("Controller Input")]
 	//Controller input
-	bool playerIndexSet = false;
+	//bool playerIndexSet = false;
 	PlayerIndex playerIndex;
 	GamePadState state;
 	GamePadState prevState;
@@ -53,6 +57,8 @@ public class MissionSelectLC : MonoBehaviour {
 	public bool IntroEnded=false;
 
 	void Start () {
+		GM = GameObject.FindGameObjectWithTag ("GameManage");
+		GameManager = GM.GetComponent<GameManager> ();
 		IntroEnded = false;
 		Debug.Log ("Start of mission select");
 		StartCoroutine (GameStartAnim ());
@@ -60,6 +66,7 @@ public class MissionSelectLC : MonoBehaviour {
 	}
 
 	void Update () {
+		/*
 		if (!playerIndexSet || !prevState.IsConnected)
 		{
 			for (int i = 0; i < 4; ++i)
@@ -77,8 +84,8 @@ public class MissionSelectLC : MonoBehaviour {
 
 		prevState = state;
 		state = GamePad.GetState(playerIndex);
-
-		if (prevState.Buttons.A == ButtonState.Pressed && state.Buttons.A == ButtonState.Released && IntroEnded == true){
+		*/
+		if (GameManager.prevState.Buttons.A == ButtonState.Pressed && GameManager.state.Buttons.A == ButtonState.Released && IntroEnded == true){
 			switch(ControllerSpot){
 
 			case 0:
@@ -98,17 +105,17 @@ public class MissionSelectLC : MonoBehaviour {
 				break;
 			}
 		}
-		if (prevState.DPad.Down == ButtonState.Pressed && state.DPad.Down == ButtonState.Released && ControllerSpot < 4) {
+		if (GameManager.prevState.DPad.Down == ButtonState.Pressed && GameManager.state.DPad.Down == ButtonState.Released && ControllerSpot < 4) {
 			ControllerSpot++;
 			ControllerSelect ();
 		}
 
-		if (prevState.DPad.Up == ButtonState.Pressed && state.DPad.Up == ButtonState.Released && ControllerSpot > 0) {
+		if (GameManager.prevState.DPad.Up == ButtonState.Pressed && GameManager.state.DPad.Up == ButtonState.Released && ControllerSpot > 0) {
 			ControllerSpot--;
 			ControllerSelect ();
 		}
 
-		if (prevState.Buttons.B == ButtonState.Released && state.Buttons.B == ButtonState.Pressed) {
+		if (GameManager.prevState.Buttons.B == ButtonState.Released && GameManager.state.Buttons.B == ButtonState.Pressed) {
 			MainMenuButton ();
 		}
 	}

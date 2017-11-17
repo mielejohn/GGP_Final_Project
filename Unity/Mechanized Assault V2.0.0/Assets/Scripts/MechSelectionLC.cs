@@ -13,6 +13,10 @@ public class MechSelectionLC : MonoBehaviour {
 	public GameObject AllMechItems;
 	public GameObject AllWeaponItems;
 
+	[Space]
+	[Header("Game Manager")]
+	public GameObject GM;
+	public GameManager GameManager;
 
 	[Space]
 	[Header("Frame Items")]
@@ -136,7 +140,7 @@ public class MechSelectionLC : MonoBehaviour {
 	[Space]
 	[Header("Contoller Input")]
 	//Controller input
-	bool playerIndexSet = false;
+	//bool playerIndexSet = false;
 	PlayerIndex playerIndex;
 	GamePadState state;
 	GamePadState prevState;
@@ -156,6 +160,8 @@ public class MechSelectionLC : MonoBehaviour {
 	}
 
 	void Start () {
+		GM = GameObject.FindGameObjectWithTag ("GameManage");
+		GameManager = GM.GetComponent<GameManager> ();
 		StartCoroutine (MechSelectStartAnim ());
 		FrameChoice ();
 		//LeftWeaponChoice ();
@@ -164,7 +170,7 @@ public class MechSelectionLC : MonoBehaviour {
 	}
 
 	void Update () {
-
+		/*
 		if (!playerIndexSet || !prevState.IsConnected)
 		{
 			for (int i = 0; i < 4; ++i)
@@ -182,8 +188,8 @@ public class MechSelectionLC : MonoBehaviour {
 
 		prevState = state;
 		state = GamePad.GetState(playerIndex);
-
-		if (prevState.Buttons.RightShoulder == ButtonState.Pressed && state.Buttons.RightShoulder == ButtonState.Released) {
+		*/
+		if (GameManager.prevState.Buttons.RightShoulder == ButtonState.Pressed && GameManager.state.Buttons.RightShoulder == ButtonState.Released) {
 			Debug.Log ("Right Shoulder Pressed");
 			if (ControllerSelection == 0) {
 				NextFrame ();
@@ -195,7 +201,7 @@ public class MechSelectionLC : MonoBehaviour {
 
 		}
 
-		if (prevState.Buttons.LeftShoulder == ButtonState.Pressed && state.Buttons.LeftShoulder == ButtonState.Released) {
+		if (GameManager.prevState.Buttons.LeftShoulder == ButtonState.Pressed && GameManager.state.Buttons.LeftShoulder == ButtonState.Released) {
 			Debug.Log ("Left Shoulder Pressed");
 			if(ControllerSelection == 0){
 				PreviousFrame ();
@@ -206,7 +212,7 @@ public class MechSelectionLC : MonoBehaviour {
 			}
 		}
 
-		if (prevState.Buttons.A == ButtonState.Pressed && state.Buttons.A == ButtonState.Released) {
+		if (GameManager.prevState.Buttons.A == ButtonState.Pressed && GameManager.state.Buttons.A == ButtonState.Released) {
 			Debug.Log ("'A' Pressed");
 			if (ControllerSelection == 0) {
 				ContinueButton ();
@@ -221,7 +227,7 @@ public class MechSelectionLC : MonoBehaviour {
 			}
 		}
 
-		if (prevState.Buttons.B == ButtonState.Pressed && state.Buttons.B == ButtonState.Released) {
+		if (GameManager.prevState.Buttons.B == ButtonState.Pressed && GameManager.state.Buttons.B == ButtonState.Released) {
 			Debug.Log ("'B' Pressed");
 			if (ControllerSelection == 0) {
 				BackButton ();

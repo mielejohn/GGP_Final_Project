@@ -6,7 +6,11 @@ using UnityEngine.SceneManagement;
 using XInputDotNetPure;
 
 public class MainMenuLC : MonoBehaviour {
+	[Header("Game Manager")]
+	public GameObject GM;
+	public GameManager GameManager;
 
+	[Space]
 	[Header("Main Menu Items")]
 	//Main Menu Items
 	public GameObject MainMenuStuff;
@@ -87,7 +91,7 @@ public class MainMenuLC : MonoBehaviour {
 	[Space]
 	[Header("Controller Input")]
 	//Controller input
-	bool playerIndexSet = false;
+	//bool playerIndexSet = false;
 	PlayerIndex playerIndex;
 	GamePadState state;
 	GamePadState prevState;
@@ -97,6 +101,8 @@ public class MainMenuLC : MonoBehaviour {
 	}
 
 	void Start () {
+		GM = GameObject.FindGameObjectWithTag ("GameManage");
+		GameManager = GM.GetComponent<GameManager> ();
 		StartCoroutine (GameStartAnim ());
 		PlayerPrefs.SetFloat ("MasterVolume", MasterVolumeSlider.value);
 		PlayerPrefs.SetFloat ("MusicVolume", MasterVolumeSlider.value);
@@ -109,25 +115,30 @@ public class MainMenuLC : MonoBehaviour {
 		MasterVolume.text = "" + MasterVolumeSlider.value;
 		MusicVolume.text = "" + MusicVolumeSlider.value;
 
-		if (!playerIndexSet || !prevState.IsConnected)
-		{
-			for (int i = 0; i < 4; ++i)
-			{
-				PlayerIndex testPlayerIndex = (PlayerIndex)i;
-				GamePadState testState = GamePad.GetState(testPlayerIndex);
-				if (testState.IsConnected)
-				{
-					Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
-					playerIndex = testPlayerIndex;
-					playerIndexSet = true;
+		/*if (GameManager.playerIndexSet == false || GameManager.prevState.IsConnected == false) {
+			print ("Game Manager isn't set");
+			if (!playerIndexSet || !prevState.IsConnected) {
+				for (int i = 0; i < 4; ++i) {
+					PlayerIndex testPlayerIndex = (PlayerIndex)i;
+					GamePadState testState = GamePad.GetState (testPlayerIndex);
+					if (testState.IsConnected) {
+						Debug.Log (string.Format ("GamePad found {0}", testPlayerIndex));
+						playerIndex = testPlayerIndex;
+						playerIndexSet = true;
+					}
 				}
 			}
-		}
+			prevState = state;
+			state = GamePad.GetState (playerIndex);
+		} else {*/
+		//prevState = GameManager.state;
+		//state = GameManager.state;
+		//print ("prevState in main menu is: " + prevState);
+		//print ("State in main menu is: " + state);
+		//}
 
-		prevState = state;
-		state = GamePad.GetState(playerIndex);
 
-		if (prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed){
+		if (GameManager.prevState.Buttons.A == ButtonState.Released && GameManager.state.Buttons.A == ButtonState.Pressed){
 			Debug.Log ("A button pressed");
 			MissionSelectbutton ();
 		}
