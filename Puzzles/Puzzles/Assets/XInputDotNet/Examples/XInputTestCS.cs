@@ -14,13 +14,6 @@ public class XInputTestCS : MonoBehaviour
         // No need to initialize anything for the plugin
     }
 
-    void FixedUpdate()
-    {
-        // SetVibration should be sent in a slower rate.
-        // Set vibration according to triggers
-        GamePad.SetVibration(playerIndex, state.Triggers.Left, state.Triggers.Right);
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -54,6 +47,9 @@ public class XInputTestCS : MonoBehaviour
         {
             GetComponent<Renderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         }
+
+        // Set vibration according to triggers
+        GamePad.SetVibration(playerIndex, state.Triggers.Left, state.Triggers.Right);
 
         // Make the current object turn
         transform.localRotation *= Quaternion.Euler(0.0f, state.ThumbSticks.Left.X * 25.0f * Time.deltaTime, 0.0f);
