@@ -1,0 +1,162 @@
+fileFormatVersion: 2
+guid: f9fba427468a8e84e9f3d7977f66bfc9
+timeCreated: 1512015843
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Head2
+    100004: joint1
+    100006: joint2
+    100008: joint2 1
+    100010: joint3
+    100012: joint3 1
+    100014: joint4
+    100016: LeftToe1
+    100018: LowerLeftLeg1
+    100020: LowerRightLeg1
+    100022: polySurface49
+    100024: polySurface50
+    100026: polySurface51
+    100028: RightToe1
+    100030: UpperLeftleg1
+    100032: UpperRightLeg3
+    400000: //RootNode
+    400002: Head2
+    400004: joint1
+    400006: joint2
+    400008: joint2 1
+    400010: joint3
+    400012: joint3 1
+    400014: joint4
+    400016: LeftToe1
+    400018: LowerLeftLeg1
+    400020: LowerRightLeg1
+    400022: polySurface49
+    400024: polySurface50
+    400026: polySurface51
+    400028: RightToe1
+    400030: UpperLeftleg1
+    400032: UpperRightLeg3
+    2300000: //RootNode
+    2300002: Head2
+    2300004: LeftToe1
+    2300006: LowerLeftLeg1
+    2300008: LowerRightLeg1
+    2300010: polySurface49
+    2300012: polySurface50
+    2300014: polySurface51
+    2300016: RightToe1
+    2300018: UpperLeftleg1
+    2300020: UpperRightLeg3
+    3300000: //RootNode
+    3300002: Head2
+    3300004: LeftToe1
+    3300006: LowerLeftLeg1
+    3300008: LowerRightLeg1
+    3300010: polySurface49
+    3300012: polySurface50
+    3300014: polySurface51
+    3300016: RightToe1
+    3300018: UpperLeftleg1
+    3300020: UpperRightLeg3
+    4300000: polySurface52
+    4300002: Head2
+    4300004: polySurface51
+    4300006: polySurface49
+    4300008: polySurface50
+    4300010: RightToe1
+    4300012: LowerRightLeg1
+    4300014: UpperRightLeg3
+    4300016: LeftToe1
+    4300018: LowerLeftLeg1
+    4300020: UpperLeftleg1
+    7400000: Default_Standing
+    7400002: Moving_Left
+    7400004: Standing_Left
+    7400006: Moving_Right
+    7400008: Standing_Right
+    7400010: Flight
+    7400012: StationaryFlight
+    7400014: Take 001 (2)
+    7400016: Take 001 (3)
+    7400018: Take 001 (4)
+    7400020: Take 001 (5)
+    7400022: Take 001 (6)
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

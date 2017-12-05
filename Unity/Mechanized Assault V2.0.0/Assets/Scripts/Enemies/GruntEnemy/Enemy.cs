@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour {
 
 	[Space]
 	[Header("Health")]
-	[SerializeField] int health = 7000;
+	[SerializeField] int health = 600;
 	//public GameObject Player;
 	public Slider HealthSlider;
 
@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour {
 	[Space]
 	[Header("Attacking")]
 	public GameObject Bullet;
-	public float BulletSpeed = 450.0f;
+	public float BulletSpeed = 375.0f;
 	public GameObject LeftButlletSpawn;
 	public GameObject RightButlletSpawn;
 
@@ -48,67 +48,77 @@ public class Enemy : MonoBehaviour {
 	[Header("Misc.")]
 	protected GameObject patrollingInterestPoint;
 	public GameObject PlayerOfInterest;
+	public Tutorial_Controller TC;
+	public MonoBehaviour LevelController;
+	public GameObject Explosion_Particles;
+	public bool dead=false;
 
-	protected virtual void Start () {
-		
+	void Awake(){
 		if (patrolPoints == null) {
 			patrolPoints = new List<GameObject> ();
 			foreach (GameObject go in GameObject.FindGameObjectsWithTag("NavPatrolPoints")) {
 				patrolPoints.Add (go);
 			}
 		}
+	}
+
+
+	protected virtual void Start () {
+		
+
 		SwitchToPatrolling ();
 	}
 
 	protected void Update () {
-		myTime = myTime + Time.deltaTime;
-		PlayerOfInterest = GameObject.FindGameObjectWithTag ("Player");
-		switch (state) {
+		if (dead == false) {
+			myTime = myTime + Time.deltaTime;
+			PlayerOfInterest = GameObject.FindGameObjectWithTag ("Player");
+			switch (state) {
 			case EnemyAiStates.Attacking:
-				OnAttackingUpdate();
+				OnAttackingUpdate ();
 				break;
 			case EnemyAiStates.Chasing:
-				OnChasingUpdate();
+				OnChasingUpdate ();
 				break;
 			case EnemyAiStates.Patrolling:
-				OnPatrollingUpdate();
+				OnPatrollingUpdate ();
 				break;
 
+			}
+
+			if (state == EnemyAiStates.Chasing || state == EnemyAiStates.Attacking) {
+				Vector3 targetDir = PlayerOfInterest.transform.position - transform.position;
+				Quaternion lookRotation = Quaternion.LookRotation (targetDir);
+				Vector3 rotation = lookRotation.eulerAngles;
+				transform.rotation = Quaternion.Euler (0f, rotation.y, 0f);
+				transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
+			}
+
+			if (state == EnemyAiStates.Patrolling) {
+				transform.rotation = Quaternion.LookRotation (patrollingInterestPoint.transform.position - transform.position, Vector3.up);
+			}
 		}
 
-		if (state == EnemyAiStates.Chasing || state == EnemyAiStates.Attacking) {
-			Vector3 targetDir = PlayerOfInterest.transform.position - transform.position;
-			Quaternion lookRotation = Quaternion.LookRotation (targetDir);
-			Vector3 rotation = lookRotation.eulerAngles;
-			transform.rotation = Quaternion.Euler (0f, rotation.y, 0f);
-			transform.position = new Vector3 (transform.position.x, 5.81f, transform.position.z);
-		}
-
-		if (state == EnemyAiStates.Patrolling) {
-			transform.rotation = Quaternion.LookRotation (patrollingInterestPoint.transform.position - transform.position,Vector3.up);
-		}
-
-		if (health <= 0 && PlayerOfInterest.gameObject.GetComponent<FrameController> ().LockedOn == true) {
-			//PlayerOfInterest.gameObject.GetComponent<FrameController> ().ResetRotations ();
-			Destroy (this.gameObject);
-		} 
-
-		if (health <= 0) {
+		if (health <= 0 && dead == false) {
+			dead = true;
 			PlayerOfInterest.gameObject.GetComponent<FrameController> ().enemy = null;
-			Destroy (this.gameObject);
+			if (PlayerPrefs.GetInt ("MissionSelect") == 4) {
+				TC.EnemiesCount--;
+			}
+			StartCoroutine (Dead_M ());
 		}
 
 		HealthSlider.value = health;
 	}
 
 	protected virtual void OnAttackingUpdate(){
-		Debug.Log ("OnAttackingStarted");
+		//Debug.Log ("OnAttackingStarted");
 		float step = AttackSpeed * Time.deltaTime;
 
 		float distance = Vector3.Distance (transform.position, PlayerOfInterest.transform.position);
 		if (distance>attackingDistance) {
 			SwitchToChasing (PlayerOfInterest);
-			Debug.Log ("SwitchingToChasing");
+			//Debug.Log ("SwitchingToChasing");
 		}
 		if (distance < ShootingDistance) {
 			if (myTime > nextFire) {
@@ -127,27 +137,27 @@ public class Enemy : MonoBehaviour {
 				Destroy (Bullet_I, 1.0f);
 				Destroy (Bullet_II, 1.0f);
 			}
-			Debug.Log ("Too close for comfort...");
+			//Debug.Log ("Too close for comfort...");
 		} else {
 			transform.position = Vector3.MoveTowards (transform.position, PlayerOfInterest.transform.position, step);
 		}
 	}
 
 	protected virtual void OnChasingUpdate(){
-		Debug.Log ("OnChasingStarted");
+		//Debug.Log ("OnChasingStarted");
 		float step = ChaseSpeed * Time.deltaTime;
 		transform.position = Vector3.MoveTowards (transform.position, PlayerOfInterest.transform.position, step);
 
 		float distance = Vector3.Distance (transform.position, PlayerOfInterest.transform.position);
-		Debug.Log ("About to switch to attacking");
+		//Debug.Log ("About to switch to attacking");
 		if (distance <= attackingDistance) {
 			SwitchToAttacking (PlayerOfInterest);
-			Debug.Log ("SwitchingToAttacking");
+			//Debug.Log ("SwitchingToAttacking");
 		}
 	}
 
 	protected virtual void OnPatrollingUpdate(){
-		Debug.Log ("OnPatrollingStarted");
+		//Debug.Log ("OnPatrollingStarted");
 		float step = walkingSpeed * Time.deltaTime;
 		transform.position = Vector3.MoveTowards (transform.position, patrollingInterestPoint.transform.position, step);
 
@@ -155,12 +165,12 @@ public class Enemy : MonoBehaviour {
 		float distance = Vector3.Distance (transform.position, patrollingInterestPoint.transform.position);
 
 		if (PlayerDistance <= chasingDistance) {
-			Debug.Log ("SwitchingToChasing");
+			//Debug.Log ("SwitchingToChasing");
 			SwitchToChasing (PlayerOfInterest);
 		}
 
 		if (distance <= 1) {
-			Debug.Log ("SelectingRandom point");
+			//Debug.Log ("SelectingRandom point");
 			SelectRandomPatrolPoint();
 
 		}
@@ -205,13 +215,22 @@ public class Enemy : MonoBehaviour {
 	}
 
 	protected virtual void SelectRandomPatrolPoint(){
-		Debug.Log ("Choosing a Random point");
+		//Debug.Log ("Choosing a Random point");
 		int choice = Random.Range (0, patrolPoints.Count);
 		patrollingInterestPoint = patrolPoints [choice];
-		Debug.Log ("Patrol points are: " + patrolPoints);
+		//Debug.Log ("Patrol points are: " + patrolPoints);
 	}
 
 	void HitBySphereCast(){
 		print ("hit by the ray");
+	}
+
+	private IEnumerator Dead_M(){
+		for (int i = 0; i < 2; i++) {
+			GameObject Explosion_Clone = Instantiate (Explosion_Particles);
+			Explosion_Clone.transform.position = this.gameObject.transform.position;
+			yield return new WaitForSeconds (0.7f);
+		}
+		Destroy (this.gameObject);
 	}
 }

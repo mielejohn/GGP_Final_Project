@@ -1,100 +1,15 @@
 fileFormatVersion: 2
 guid: 46a9b7a11e14e4a4ba4bf5c55515b7c0
-timeCreated: 1509326388
+timeCreated: 1511931164
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
-    100000: extrudedSurface3
-    100002: pCube1
-    100004: pCube2
-    100006: pCube3
-    100008: pCylinder1
-    100010: pCylinder2
-    100012: pCylinder3
-    100014: polySurface1
-    100016: polySurface10
-    100018: polySurface11
-    100020: polySurface12
-    100022: polySurface13
-    100024: polySurface2
-    100026: polySurface3
-    100028: polySurface3 1
-    100030: polySurface4
-    100032: polySurface5
-    100034: polySurface6
-    100036: polySurface7
-    100038: polySurface8
-    100040: polySurface9
-    100042: //RootNode
-    100044: transform1
-    100046: transform10
-    100048: transform11
-    100050: transform12
-    100052: transform13
-    100054: transform14
-    100056: transform15
-    100058: transform16
-    100060: transform17
-    100062: transform18
-    100064: transform19
-    100066: transform2
-    100068: transform20
-    100070: transform3
-    100072: transform4
-    100074: transform5
-    100076: transform6
-    100078: transform7
-    100080: transform8
-    100082: transform9
-    400000: extrudedSurface3
-    400002: pCube1
-    400004: pCube2
-    400006: pCube3
-    400008: pCylinder1
-    400010: pCylinder2
-    400012: pCylinder3
-    400014: polySurface1
-    400016: polySurface10
-    400018: polySurface11
-    400020: polySurface12
-    400022: polySurface13
-    400024: polySurface2
-    400026: polySurface3
-    400028: polySurface3 1
-    400030: polySurface4
-    400032: polySurface5
-    400034: polySurface6
-    400036: polySurface7
-    400038: polySurface8
-    400040: polySurface9
-    400042: //RootNode
-    400044: transform1
-    400046: transform10
-    400048: transform11
-    400050: transform12
-    400052: transform13
-    400054: transform14
-    400056: transform15
-    400058: transform16
-    400060: transform17
-    400062: transform18
-    400064: transform19
-    400066: transform2
-    400068: transform20
-    400070: transform3
-    400072: transform4
-    400074: transform5
-    400076: transform6
-    400078: transform7
-    400080: transform8
-    400082: transform9
-    2300000: pCylinder3
-    2300002: //RootNode
-    3300000: pCylinder3
-    3300002: //RootNode
-    4300000: pCylinder3
-    4300002: Sniper_01
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Sniper_01
     9500000: //RootNode
   materials:
     importMaterials: 1
