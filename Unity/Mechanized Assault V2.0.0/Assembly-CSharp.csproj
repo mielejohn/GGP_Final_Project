@@ -83,7 +83,6 @@
      <Compile Include="Assets\Scripts\LevelControllers\MissionSelect\MissionSelectLC.cs" />
      <Compile Include="Assets\Scripts\LevelControllers\PracticeArena\PracticeArenaLC.cs" />
      <Compile Include="Assets\Scripts\MechRotaterKeyboard.cs" />
-     <Compile Include="Assets\Scripts\PracticeArenaLC.cs" />
      <Compile Include="Assets\Scripts\Supply_Crate_Generic.cs" />
      <Compile Include="Assets\Scripts\TerrainScript.cs" />
      <Compile Include="Assets\Scripts\TutorialControllers\Dialogue_Controller.cs" />

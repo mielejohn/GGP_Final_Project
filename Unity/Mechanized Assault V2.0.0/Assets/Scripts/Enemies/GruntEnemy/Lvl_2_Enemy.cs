@@ -48,6 +48,7 @@ public class Lvl_2_Enemy : MonoBehaviour {
 	protected GameObject patrollingInterestPoint;
 	public GameObject PlayerOfInterest;
 	public Tutorial_Controller TC;
+	public Level_2_LC Level2LC;
 	public GameObject Explosion_Particles;
 	public bool dead=false;
 
@@ -60,6 +61,9 @@ public class Lvl_2_Enemy : MonoBehaviour {
 			}
 		}
 		SwitchToPatrolling ();
+		if(PlayerPrefs.GetInt ("MissionSelect") == 5){
+			Level2LC = GameObject.FindGameObjectWithTag ("LevelController").GetComponent<Level_2_LC> ();
+		}
 	}
 
 	protected void Update () {
@@ -97,6 +101,8 @@ public class Lvl_2_Enemy : MonoBehaviour {
 			PlayerOfInterest.gameObject.GetComponent<FrameController> ().enemy = null;
 			if (PlayerPrefs.GetInt ("MissionSelect") == 4) {
 				TC.EnemiesCount--;
+			} else if(PlayerPrefs.GetInt ("MissionSelect") == 5){
+				Level2LC.Enemies_W_1--;
 			}
 			StartCoroutine (Dead_M ());
 		}

@@ -11,6 +11,14 @@ public class Level_2_LC : MonoBehaviour {
 	public FrameController FC;
 
 	[Space]
+	[Header("Cutscene")]
+	public GameObject CinematicCamera;
+	public GameObject Titan_Boss;
+	public GameObject Miscu_Boss;
+	public GameObject BlackScreen;
+	public GameObject[] CinematicShips;
+
+	[Space]
 	[Header("Spawn Point")]
 	public GameObject Frame_Spawn;
 
@@ -42,6 +50,7 @@ public class Level_2_LC : MonoBehaviour {
 	[Space]
 	[Header("Mission 2 Enemies Wave 1")]
 	public GameObject[] EnemiesWave_1;
+	public int Enemies_W_1 = 5;
 
 	[Space]
 	[Header("Mission 2 Enemies Wave 2")]
@@ -67,6 +76,7 @@ public class Level_2_LC : MonoBehaviour {
 	void Start () {
 		SpawnFrame ();
 		StartCoroutine (GameStart());
+		FC = GameObject.FindGameObjectWithTag ("Player").GetComponent<FrameController> ();
 	}
 
 
@@ -119,6 +129,10 @@ public class Level_2_LC : MonoBehaviour {
 			KeyboardHelper.SetActive (true);
 			ControllerHelper.SetActive (false);
 			ControlsUp = false;
+		}
+
+		if (Enemies_W_1 <= 0) {
+			StartCoroutine(MissionPassed ());
 		}
 	}
 
@@ -182,12 +196,16 @@ public class Level_2_LC : MonoBehaviour {
 	}
 
 	public IEnumerator MissionPassed(){
+		Debug.Log ("Mission Passed");
 		PassedObject.SetActive (true);
 		yield return new WaitForSeconds (1.1f);
 		PassedObject.GetComponent<Animator> ().speed = 0;
-		yield return new WaitForSeconds (5.1f);
+		yield return new WaitForSeconds (4.1f);
+		PassedObject.SetActive (false);
 		PlayerPrefs.SetString ("Mission1Passed", "True");
-		StartCoroutine (LoadLevelWithBar (1));
+
+		StartCoroutine (Cutscene ());
+		//StartCoroutine (LoadLevelWithBar (1));
 	}
 
 	IEnumerator LoadLevelWithBar(int LevelNumber){
@@ -196,6 +214,19 @@ public class Level_2_LC : MonoBehaviour {
 			loadingBar.value = async.progress;
 			yield return null;
 		}
+	}
+
+	private IEnumerator Cutscene(){
+		FC.gameObject.SetActive (false);
+		for (int i = 0; i < CinematicShips.Length; i++) {
+			CinematicShips [i].SetActive (true);
+		}
+		CinematicCamera.SetActive (true);
+		Titan_Boss.SetActive (true);
+		Miscu_Boss.SetActive (true);
+		yield return new WaitForSeconds (20.0f);
+		BlackScreen.SetActive (true);
+		StartCoroutine (LoadLevelWithBar (1));
 	}
 }
 
